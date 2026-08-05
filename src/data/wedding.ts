@@ -15,12 +15,12 @@ export const couple = {
 /** Opcional: dejar los arreglos vacíos si no se desea mostrar a los padres en la invitación. */
 export const parents = {
   groom: ['Jose marquez', 'Maria zambrano'] as string[], // ej. ['Juan Márquez', 'María Pérez de Márquez']
-  bride: ['Marcos Sergio Caldera Delgado', 'Amadora del Carmen Carballo Frías'] as string[],
+  bride: ['Marcos Caldera', 'Amadora Carballo'] as string[],
 };
 
 /** Sección "Gratitud", entre el Hero y la Invitación formal. `highlight` se destaca tipográficamente. */
 export const gratitudNote = {
-  body: 'Dios en su infinita bondad, nos concedió la maravillosa dicha de encontrarnos, de descubrir en el otro un amor verdadero y eterno. Hoy con el corazón lleno de gratitud, Celebramos el inicio de nuestro',
+  body: 'Dios en su infinita bondad, nos concedió la maravillosa dicha de encontrarnos, de descubrir en el otro un amor verdadero y eterno.\nHoy con el corazón lleno de gratitud, celebramos el inicio de nuestro',
   highlight: 'PARA SIEMPRE',
 };
 
