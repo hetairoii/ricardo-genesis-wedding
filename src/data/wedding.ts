@@ -15,7 +15,22 @@ export const couple = {
 /** Opcional: dejar los arreglos vacíos si no se desea mostrar a los padres en la invitación. */
 export const parents = {
   groom: ['Jose marquez', 'Maria zambrano'] as string[], // ej. ['Juan Márquez', 'María Pérez de Márquez']
-  bride: ['Juan Márquez', 'María Pérez de Márquez'] as string[],
+  bride: ['Marcos Caldera', 'Amadora Carballo'] as string[],
+};
+
+/** Sección "Gratitud", entre el Hero y la Invitación formal. `highlight` se destaca tipográficamente. */
+export const gratitudNote = {
+  body: 'Dios en su infinita bondad, nos concedió la maravillosa dicha de encontrarnos, de descubrir en el otro un amor verdadero y eterno.\nHoy con el corazón lleno de gratitud, celebramos el inicio de nuestro',
+  highlight: 'PARA SIEMPRE',
+};
+
+/** Sección "Honor de invitar", después de los padres. `title` se jerarquiza como remate del bloque. */
+export const honorNote = {
+  intro:
+    'Tenemos el gran honor de invitarte a acompañarnos a uno de los días más especiales de nuestras vidas.',
+  title: 'La Celebración de Nuestro matrimonio.',
+  closing:
+    'Un encuentro de amor, fe, alegría y honra al Señor, que permanecerá por Siempre en nuestro Corazón.',
 };
 
 /**
@@ -47,14 +62,8 @@ export const venue = {
 
 export const dressCode = {
   label: 'Formal / Elegante',
-  note: 'Se sugiere evitar el color blanco, reservado para la novia.',
-  suggestedColors: [
-    { name: 'Marfil', hex: '#FAF7F2' },
-    { name: 'Bruma', hex: '#E8EAEC' },
-    { name: 'Cielo', hex: '#DCE3EF' },
-    { name: 'Perivinca', hex: '#B7C2DA' },
-    { name: 'Azul empolvado', hex: '#7C8CAF' },
-  ],
+  note: 'Los novios reservan para sí los colores indicados abajo. Se agradece a los invitados asistir en un color diferente a estos.',
+  reservedColors: ['Blanco', 'Gris', 'Celeste'],
 };
 
 export const adultsOnlyNote =
@@ -74,9 +83,25 @@ export const program: ProgramItem[] = [
   { time: '9:00 PM', title: 'Fiesta' },
 ];
 
+export type RsvpContact = {
+  name: string;
+  role: string;
+  phone: string; // formato internacional sin signos, ej. "584121234567", o "PENDIENTE"
+};
+
 export const rsvp = {
   deadlineDisplay: '08 de Noviembre de 2026', // ej. "15 de octubre de 2026"
-  whatsappPhone: '584245937048', // formato internacional sin signos, ej. "584121234567"
   message:
     'Hola! Confirmo mi asistencia a la boda de Ricardo y Genesis. Somos [nombre / número de personas]: ',
+  contacts: [
+    { name: couple.groomFirstName, role: 'Novio', phone: '584245937048' },
+    { name: couple.brideFirstName, role: 'Novia', phone: 'PENDIENTE' },
+  ] as RsvpContact[],
+};
+
+/** Sección "Cierre", antes del footer. `verse` y `verseReference` van en <blockquote>/<cite>. */
+export const cierreNote = {
+  body: 'Con todo Nuestro Amor y gratitud.\n\nTe esperamos para Celebrar este Sueño hecho realidad.',
+  verse: 'Todo lo hizo Hermoso en su tiempo',
+  verseReference: 'Eclesiastés 3:11',
 };

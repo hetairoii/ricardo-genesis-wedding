@@ -2,35 +2,44 @@
 import Section from '../Section.astro';
 import LinkButton from '../LinkButton.astro';
 import { rsvp } from '../../data/wedding';
-
-const hasPhone = rsvp.whatsappPhone !== 'PENDIENTE';
-const waHref = hasPhone ? `https://wa.me/${rsvp.whatsappPhone}?text=${encodeURIComponent(rsvp.message)}` : undefined;
 ---
 
 <Section id="confirmacion" background="sky" class="py-24">
-	<p class="text-center font-label text-xl mb-2 tracking-[0.3em] text-deep uppercase">Confirmación de asistencia</p>
+	<p class="mb-2 text-center font-label text-xl tracking-[0.3em] text-deep uppercase">Confirmación de asistencia</p>
 	<h2 class="mt-3 text-center font-serif text-4xl text-ink">Esperamos contar contigo</h2>
 	<p class="mx-auto mt-4 max-w-[50ch] text-center font-label text-lg text-deep">
 		Por favor confirma tu asistencia antes del {rsvp.deadlineDisplay}.
 	</p>
 
-	<div class="mt-8 flex justify-center">
+	<div class="mx-auto mt-10 grid max-w-2xl gap-8 sm:grid-cols-2">
 		{
-			hasPhone ? (
-				<LinkButton href={waHref!} external variant="solid" class="px-8 text-nowrap">
-					Confirmar por WhatsApp
-				</LinkButton>
-			) : (
-				<p class="font-label text-sm text-deep">PENDIENTE: número de contacto</p>
-			)
+			rsvp.contacts.map((contact) => {
+				const hasPhone = contact.phone !== 'PENDIENTE';
+				const waHref = hasPhone
+					? `https://wa.me/${contact.phone}?text=${encodeURIComponent(rsvp.message)}`
+					: undefined;
+
+				return (
+					<div class="flex flex-col items-center gap-3 rounded-sm border border-champagne/40 bg-ivory/60 px-6 py-8 text-center">
+						<p class="font-label text-xs tracking-[0.25em] text-deep uppercase">{contact.role}</p>
+						<p class="font-script text-3xl text-dusty">{contact.name}</p>
+
+						{hasPhone ? (
+							<LinkButton href={waHref!} external variant="solid" width="full" class="mt-2 text-nowrap">
+								Confirmar por WhatsApp
+							</LinkButton>
+						) : (
+							<p class="mt-2 font-label text-sm text-deep">PENDIENTE: número de contacto</p>
+						)}
+
+						{hasPhone && (
+							<p class="font-label text-sm text-deep">
+								También puedes escribir al <span class="font-bold">+{contact.phone}</span>
+							</p>
+						)}
+					</div>
+				);
+			})
 		}
 	</div>
-
-	{
-		hasPhone && (
-			<p class="mt-4 text-center font-label text-lg text-deep">
-				También puedes escribirnos al <span class="font-bold">+{rsvp.whatsappPhone}</span>
-			</p>
-		)
-	}
 </Section>
