@@ -1,0 +1,36 @@
+name: Funcionalidad o mejora
+description: Proponer una funcionalidad nueva o un cambio a algo existente
+title: "feat: "
+labels: ["enhancement"]
+body:
+  - type: textarea
+    id: descripcion
+    attributes:
+      label: ¿Qué se quiere lograr?
+      description: Describe la funcionalidad o el cambio.
+    validations:
+      required: true
+  - type: textarea
+    id: motivo
+    attributes:
+      label: ¿Por qué importa?
+      description: A quién afecta o qué problema resuelve.
+    validations:
+      required: true
+  - type: textarea
+    id: criterios
+    attributes:
+      label: Criterios de aceptación
+      description: ¿Cómo se sabe que esto está resuelto? Lista en checklist si aplica.
+      placeholder: |
+        - [ ] ...
+        - [ ] ...
+    validations:
+      required: true
+  - type: textarea
+    id: areas
+    attributes:
+      label: Archivos o áreas involucradas
+      description: Opcional, si ya se conocen.
+    validations:
+      required: false
