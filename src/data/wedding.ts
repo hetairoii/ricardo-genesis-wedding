@@ -95,7 +95,7 @@ export const rsvp = {
     'Hola! Confirmo mi asistencia a la boda de Ricardo y Genesis. Somos [nombre / número de personas]: ',
   contacts: [
     { name: couple.groomFirstName, role: 'Novio', phone: '584245937048' },
-    { name: couple.brideFirstName, role: 'Novia', phone: 'PENDIENTE' },
+    { name: couple.brideFirstName, role: 'Novia', phone: '584245178795' },
   ] as RsvpContact[],
 };
 
