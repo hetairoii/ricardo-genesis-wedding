@@ -4,15 +4,22 @@ interface Props {
 	external?: boolean;
 	download?: string;
 	variant?: 'outline' | 'solid';
+	/** 'fixed' (por defecto, w-80) para uso suelto; 'full' para que ocupe el ancho de su contenedor, ej. una columna. */
+	width?: 'fixed' | 'full';
 	class?: string;
 }
 
-const { href, external = false, download, variant = 'outline', class: className } = Astro.props;
+const { href, external = false, download, variant = 'outline', width = 'fixed', class: className } = Astro.props;
 
 const variantClass = {
 	outline: 'border border-deep text-deep hover:bg-deep hover:text-white',
 	solid: 'border border-deep bg-deep text-white hover:bg-ink hover:border-ink',
 }[variant];
+
+const widthClass = {
+	fixed: 'w-80',
+	full: 'w-full',
+}[width];
 ---
 
 <a
@@ -21,7 +28,8 @@ const variantClass = {
 	target={external ? '_blank' : undefined}
 	rel={external ? 'noopener noreferrer' : undefined}
 	class:list={[
-		'w-80 text-md inline-flex min-h-11 items-center justify-center gap-2 rounded-sm px-5 font-label tracking-[0.15em] uppercase transition-colors duration-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-deep',
+		widthClass,
+		'text-md inline-flex min-h-11 items-center justify-center gap-2 rounded-sm px-5 font-label tracking-[0.15em] uppercase transition-colors duration-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-deep',
 		variantClass,
 		className,
 	]}

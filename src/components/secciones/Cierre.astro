@@ -1,0 +1,30 @@
+---
+import Section from '../Section.astro';
+import Ornament from '../Ornament.astro';
+import { cierreNote } from '../../data/wedding';
+
+const paragraphs = cierreNote.body.split('\n\n');
+---
+
+<Section id="cierre" background="ivory">
+	<Ornament class="mb-8" />
+
+	<div class="mx-auto max-w-[55ch] text-center">
+		<div class="space-y-4">
+			{
+				paragraphs.map((paragraph) => (
+					<p class="font-serif text-xl leading-relaxed text-ink italic md:text-2xl">{paragraph}</p>
+				))
+			}
+		</div>
+
+		<blockquote class="mt-8 font-serif text-2xl text-dusty italic md:text-3xl">
+			&ldquo;{cierreNote.verse}&rdquo;
+		</blockquote>
+		<cite class="mt-3 block font-label text-xs tracking-[0.2em] text-deep uppercase not-italic">
+			{cierreNote.verseReference}
+		</cite>
+	</div>
+
+	<Ornament class="mt-8" />
+</Section>

@@ -1,0 +1,16 @@
+---
+import Section from '../Section.astro';
+import Ornament from '../Ornament.astro';
+import { gratitudNote } from '../../data/wedding';
+---
+
+<Section id="gratitud" background="ivory">
+	<Ornament class="mb-8" />
+
+	<p class="mx-auto max-w-[55ch] text-center font-serif text-2xl leading-relaxed text-ink italic md:text-4xl">
+		{gratitudNote.body}{' '}
+		<span class="font-script text-4xl text-dusty not-italic md:text-6xl">{gratitudNote.highlight}</span>.
+	</p>
+
+	<Ornament class="mt-8" />
+</Section>

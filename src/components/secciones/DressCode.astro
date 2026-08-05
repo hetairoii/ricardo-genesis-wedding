@@ -1,26 +1,26 @@
 ---
 import Section from '../Section.astro';
+import { Image } from 'astro:assets';
 import { dressCode } from '../../data/wedding';
+import dressCodeImage from '../../assets/dress-code.png';
 ---
 
 <Section id="dress-code" background="sky">
 	<p class="text-center font-label text-xs tracking-[0.3em] text-deep uppercase">Código de vestimenta</p>
 	<h2 class="mt-3 text-center font-serif text-3xl text-ink">{dressCode.label}</h2>
 
-	<ul class="mt-10 flex flex-wrap justify-center gap-6">
-		{
-			dressCode.suggestedColors.map((color) => (
-				<li class="flex flex-col items-center gap-2">
-					<span
-						class="h-12 w-12 rounded-full border border-ink/10"
-						style={`background-color: ${color.hex}`}
-						aria-hidden="true"
-					/>
-					<span class="font-label text-xs tracking-[0.1em] text-deep">{color.name}</span>
-				</li>
-			))
-		}
-	</ul>
+	<div class="mx-auto mt-10 max-w-sm overflow-hidden rounded-sm border border-champagne/40">
+		<Image
+			src={dressCodeImage}
+			alt="Referencia de vestimenta formal esperada para la boda: traje oscuro para caballeros y vestido largo elegante para damas"
+			class="h-auto w-full"
+			widths={[320, 480, 640]}
+			sizes="(min-width: 640px) 384px, 90vw"
+		/>
+	</div>
 
-	<p class="mx-auto mt-10 max-w-[50ch] text-center font-label text-sm text-deep">{dressCode.note}</p>
+	<p class="mx-auto mt-8 max-w-[50ch] text-center font-label text-sm text-deep">{dressCode.note}</p>
+	<p class="mt-3 text-center font-label text-sm tracking-[0.2em] text-ink uppercase">
+		{dressCode.reservedColors.join(' · ')}
+	</p>
 </Section>

@@ -1,0 +1,23 @@
+---
+import Section from '../Section.astro';
+import Ornament from '../Ornament.astro';
+import { honorNote } from '../../data/wedding';
+---
+
+<Section id="honor" background="ivory">
+	<Ornament class="mb-8" />
+
+	<div class="mx-auto max-w-[55ch] text-center">
+		<p class="font-serif text-xl leading-relaxed text-ink italic md:text-2xl">
+			{honorNote.intro}
+		</p>
+		<p class="mt-6 font-serif text-2xl text-dusty md:text-4xl">
+			{honorNote.title}
+		</p>
+		<p class="mt-6 font-serif text-xl leading-relaxed text-ink italic md:text-2xl">
+			{honorNote.closing}
+		</p>
+	</div>
+
+	<Ornament class="mt-8" />
+</Section>
