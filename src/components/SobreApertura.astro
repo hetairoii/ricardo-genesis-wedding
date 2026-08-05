@@ -1,0 +1,99 @@
+---
+---
+
+<div
+	id="sobre-apertura"
+	class="fixed inset-0 z-50 flex-col items-center justify-center gap-10 bg-ivory px-6"
+	role="dialog"
+	aria-modal="true"
+	aria-label="Abrir invitación"
+>
+	<button
+		id="sobre-boton"
+		type="button"
+		class="flex flex-col items-center gap-8 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-8 focus-visible:outline-deep"
+	>
+		<span class="sobre-visual">
+			<svg viewBox="0 0 240 160" overflow="visible" aria-hidden="true">
+				<defs>
+					<clipPath id="sobre-clip">
+						<rect x="10" y="20" width="220" height="120" rx="4" />
+					</clipPath>
+				</defs>
+
+				<rect
+					x="10"
+					y="20"
+					width="220"
+					height="120"
+					rx="4"
+					fill="var(--color-white)"
+					stroke="var(--color-champagne)"
+					stroke-width="1.5"
+				/>
+
+				<g clip-path="url(#sobre-clip)">
+					<rect
+						id="sobre-card"
+						x="35"
+						y="35"
+						width="170"
+						height="90"
+						rx="3"
+						fill="var(--color-ivory)"
+						stroke="var(--color-periwinkle)"
+						stroke-width="1"
+					/>
+				</g>
+
+				<g class="sobre-flap-group">
+					<path
+						d="M10 20 L120 90 L230 20 Z"
+						fill="var(--color-mist)"
+						stroke="var(--color-champagne)"
+						stroke-width="1.5"
+						stroke-linejoin="round"
+					/>
+					<circle cx="120" cy="55" r="15" fill="var(--color-champagne)" />
+					<text
+						x="120"
+						y="60.5"
+						text-anchor="middle"
+						font-size="13"
+						fill="var(--color-white)"
+						style="font-family: var(--font-script);"
+					>
+						R&amp;G
+					</text>
+				</g>
+			</svg>
+		</span>
+
+		<span class="font-label text-xs tracking-[0.25em] text-deep uppercase">
+			Toca el sobre para abrir tu invitación
+		</span>
+	</button>
+</div>
+
+<audio id="sobre-audio" preload="none" loop>
+	<source src="/music.mp3" type="audio/mpeg" />
+</audio>
+
+<style>
+	.sobre-visual {
+		display: block;
+		width: min(80vw, 260px);
+		perspective: 700px;
+	}
+
+	.sobre-visual svg {
+		display: block;
+		width: 100%;
+		height: auto;
+		overflow: visible;
+	}
+</style>
+
+<script>
+	import '../scripts/sobre-apertura.ts';
+</script>

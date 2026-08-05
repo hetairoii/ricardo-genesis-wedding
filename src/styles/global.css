@@ -72,4 +72,90 @@
       transition: none;
     }
   }
+
+  /*
+   * Sobre de apertura: oculto por defecto (sin JS la invitación es accesible de inmediato,
+   * nunca detrás de un sobre que no se podría abrir). Solo se muestra si el script inline
+   * de Base.astro añade .gate-locked a <html> antes del primer paint (según sessionStorage).
+   * Quitar esa clase (al terminar la animación de apertura) lo oculta y restaura el scroll.
+   */
+  #sobre-apertura {
+    display: none;
+  }
+
+  html.gate-locked #sobre-apertura {
+    display: flex;
+  }
+
+  html.gate-locked body {
+    overflow: hidden;
+  }
+
+  @keyframes sobre-flap-open {
+    from {
+      transform: rotateX(0deg);
+    }
+    to {
+      transform: rotateX(-165deg);
+    }
+  }
+
+  @keyframes sobre-card-open {
+    0% {
+      transform: translateY(0) scale(1);
+      opacity: 1;
+    }
+    52% {
+      transform: translateY(-100px) scale(1);
+      opacity: 1;
+    }
+    100% {
+      transform: translateY(-100px) scale(5);
+      opacity: 0;
+    }
+  }
+
+  @keyframes sobre-gate-fade {
+    from {
+      opacity: 1;
+    }
+    to {
+      opacity: 0;
+    }
+  }
+
+  .sobre-flap-group {
+    transform-box: fill-box;
+    transform-origin: 50% 0%;
+  }
+
+  .is-opening .sobre-flap-group {
+    animation: sobre-flap-open 450ms ease-in forwards;
+  }
+
+  #sobre-card {
+    transform-box: fill-box;
+    transform-origin: 50% 50%;
+  }
+
+  .is-opening #sobre-card {
+    animation: sobre-card-open 1250ms 350ms ease-in-out forwards;
+  }
+
+  #sobre-apertura.is-opening {
+    animation: sobre-gate-fade 500ms 1100ms ease-in forwards;
+    pointer-events: none;
+  }
+
+  /* Debe ir después de las reglas .is-opening para ganar el empate de especificidad. */
+  @media (prefers-reduced-motion: reduce) {
+    .is-opening .sobre-flap-group,
+    .is-opening #sobre-card {
+      animation: none;
+    }
+
+    #sobre-apertura.is-opening {
+      animation: sobre-gate-fade 200ms ease-out forwards;
+    }
+  }
 }
