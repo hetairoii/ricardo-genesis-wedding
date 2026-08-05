@@ -18,10 +18,51 @@ if (root) {
 
   const pad = (n: number) => String(n).padStart(2, '0');
 
+  /**
+   * Desglose calendario correcto: meses completos transcurridos entre `now` y `target`,
+   * y el resto (siempre < 1 mes) en días/horas/minutos/segundos. Nunca puede dar `60`
+   * ni valores negativos, a diferencia de restar componentes de fecha por separado.
+   */
+  const breakdown = (now: Date, target: Date) => {
+    let months = (target.getUTCFullYear() - now.getUTCFullYear()) * 12 + (target.getUTCMonth() - now.getUTCMonth());
+
+    const anchorAt = (m: number) =>
+      new Date(
+        Date.UTC(
+          now.getUTCFullYear(),
+          now.getUTCMonth() + m,
+          now.getUTCDate(),
+          now.getUTCHours(),
+          now.getUTCMinutes(),
+          now.getUTCSeconds(),
+          now.getUTCMilliseconds(),
+        ),
+      );
+
+    // El "ancla" (now + `months` meses) puede pasarse del target por el desbordamiento
+    // de días al sumar meses (ej. 31 de enero + 1 mes -> 3 de marzo). Comparar contra el
+    // timestamp real del target, no contra los componentes de fecha, corrige esto siempre
+    // con un único ajuste (el resto nunca excede un mes).
+    if (anchorAt(months).getTime() > target.getTime()) {
+      months -= 1;
+    }
+
+    let remainderMs = target.getTime() - anchorAt(months).getTime();
+
+    const days = Math.floor(remainderMs / 86_400_000);
+    remainderMs -= days * 86_400_000;
+    const hours = Math.floor(remainderMs / 3_600_000);
+    remainderMs -= hours * 3_600_000;
+    const minutes = Math.floor(remainderMs / 60_000);
+    remainderMs -= minutes * 60_000;
+    const seconds = Math.floor(remainderMs / 1000);
+
+    return { months, days, hours, minutes, seconds };
+  };
+
   const tick = () => {
-    const diff = target - Date.now();
-    const targetDate = new Date(target);
-    const nowDate = new Date(Date.now());
+    const now = Date.now();
+    const diff = target - now;
 
     if (diff <= 0) {
       root.hidden = true;
@@ -30,11 +71,7 @@ if (root) {
       return;
     }
 
-    const months = targetDate.getUTCMonth() - nowDate.getUTCMonth();
-    const days = targetDate.getUTCDate() - nowDate.getUTCDate();
-    const hours = targetDate.getUTCHours() - nowDate.getUTCHours();
-    const minutes = 60 - nowDate.getUTCMinutes();
-    const seconds = 60 - nowDate.getUTCSeconds();
+    const { months, days, hours, minutes, seconds } = breakdown(new Date(now), new Date(target));
 
     if (unitEls.months) unitEls.months.textContent = String(months);
     if (unitEls.days) unitEls.days.textContent = String(days);
