@@ -74,26 +74,6 @@ export const program: ProgramItem[] = [
   { time: '9:00 PM', title: 'Fiesta' },
 ];
 
-export type BankAccount = {
-  bank: string;
-  accountHolder: string;
-  accountType: string;
-  accountNumber: string;
-  idNumber: string;
-  idLabel: string;
-};
-
-export const bankAccounts: BankAccount[] = [
-  {
-    bank: 'PENDIENTE',
-    accountHolder: 'PENDIENTE',
-    accountType: 'PENDIENTE', // ej. "Corriente" / "Ahorros"
-    accountNumber: 'PENDIENTE',
-    idNumber: 'PENDIENTE',
-    idLabel: 'Cédula/RIF',
-  },
-];
-
 export const rsvp = {
   deadlineDisplay: '08 de Noviembre de 2026', // ej. "15 de octubre de 2026"
   whatsappPhone: '584245937048', // formato internacional sin signos, ej. "584121234567"

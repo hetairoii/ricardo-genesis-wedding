@@ -1,11 +1,12 @@
 # Ricardo & Genesis · Invitación de boda
 
-Landing page de una sola página que funciona como invitación formal de la boda de **Ricardo Márquez** y **Genesis Caldera**, el **sábado 28 de noviembre de 2026 a las 5:00 PM (EST)**. Pensada para compartirse principalmente por WhatsApp: incluye cuenta regresiva, fecha y lugar, programa, código de vestimenta, aportes bancarios y confirmación de asistencia.
+Landing page de una sola página que funciona como invitación formal de la boda de **Ricardo Márquez** y **Genesis Caldera**, el **sábado 28 de noviembre de 2026 a las 5:00 PM (EST)**. Pensada para compartirse principalmente por WhatsApp: se abre con un sobre animado que arranca la música de fondo, e incluye cuenta regresiva, fecha y lugar, programa, código de vestimenta y confirmación de asistencia.
 
 Construida con [Astro](https://astro.build) 7 + [Tailwind CSS](https://tailwindcss.com) 4, 100% estática (sin backend), en una paleta azul empolvado / marfil.
 
 ## Contenido de la invitación
 
+0. **Sobre de apertura** — portada con un sobre animado; al tocarlo se abre y arranca la música de fondo.
 1. **Hero** — nombres de los novios y anuncio de la boda, con la foto (o placeholder) a pantalla completa.
 2. **Invitación formal** — texto ceremonial, con espacio opcional para los padres.
 3. **Cuenta regresiva** — hasta el instante exacto de la ceremonia.
@@ -13,9 +14,8 @@ Construida con [Astro](https://astro.build) 7 + [Tailwind CSS](https://tailwindc
 5. **Programa** — orden de la celebración.
 6. **Código de vestimenta** — con paleta de colores sugerida.
 7. **Nota de solo adultos**.
-8. **Aportes** — datos bancarios con botón de copiar.
-9. **Confirmación de asistencia (RSVP)** — botón directo a WhatsApp.
-10. **Footer**.
+8. **Confirmación de asistencia (RSVP)** — botón directo a WhatsApp.
+9. **Footer**.
 
 ## Requisitos
 
@@ -50,7 +50,6 @@ Los campos que todavía faltan están marcados literalmente como `"PENDIENTE"` c
 | Campo | Dónde afecta |
 |---|---|
 | `venue.name`, `venue.addressLine`, `venue.mapsUrl` | Sección "Fecha y lugar". Si `mapsUrl` sigue en `"PENDIENTE"`, el botón "Cómo llegar" simplemente no se muestra (no genera un enlace roto). |
-| `bankAccounts` | Sección "Aportes". Se puede agregar más de una cuenta en el arreglo. |
 | `rsvp.whatsappPhone` (formato internacional sin signos, ej. `"584121234567"`) | Si sigue en `"PENDIENTE"`, la sección de RSVP muestra un aviso en vez de un botón de WhatsApp roto. |
 | `rsvp.deadlineDisplay` | Fecha límite mostrada en la sección de RSVP. |
 | `program` | Arreglo editable libremente: agregar, quitar o reordenar hitos del programa. |
@@ -81,8 +80,9 @@ Astro optimiza la imagen automáticamente (WebP, tamaños responsivos) al hacer 
 
 - **Paleta**: tokens definidos en `src/styles/global.css` (bloque `@theme` de Tailwind v4) — `ivory`, `white`, `mist`, `sky`, `periwinkle`, `dusty`, `deep`, `ink`, `champagne`. Generan las utilidades `bg-*`, `text-*`, `border-*` directamente.
 - **Tipografía**: Cormorant Garamond (serif, cuerpo y títulos), Great Vibes (script, acentos) y Jost (etiquetas y cifras), cargadas con la Fonts API nativa de Astro (`astro.config.mjs`).
-- **Componentes reutilizables** en `src/components/`: `Section`, `Ornament`, `PhotoSlot`, `LinkButton`, `CopyField`, `Countdown`, `FloatingRsvp`. Las secciones de contenido viven en `src/components/secciones/`.
+- **Componentes reutilizables** en `src/components/`: `Section`, `Ornament`, `PhotoSlot`, `LinkButton`, `Countdown`, `FloatingRsvp`, `SobreApertura`. Las secciones de contenido viven en `src/components/secciones/`.
 - **Revelado al scroll**: progresivo — sin JavaScript, toda la página es legible de inmediato; con JS, cada sección aparece con un fundido sutil al entrar en pantalla (`src/scripts/reveal.ts`).
+- **Sobre de apertura**: mismo patrón de mejora progresiva — sin JavaScript no existe en el HTML (la invitación es accesible de inmediato); con JS, bloquea la página (`inert` + scroll bloqueado) hasta que se toca el sobre, gesto que además arranca la música (`src/components/SobreApertura.astro`, `src/scripts/sobre-apertura.ts`).
 
 ## Estructura del proyecto
 
@@ -94,7 +94,7 @@ src/
 ├── layouts/Base.astro    # <head>, fuentes, Open Graph, favicon
 ├── components/           # componentes compartidos (Section, PhotoSlot, etc.)
 │   └── secciones/         # una sección de la página por archivo
-├── scripts/              # countdown, copiar al portapapeles, revelado, RSVP flotante
+├── scripts/              # countdown, revelado, RSVP flotante, sobre de apertura
 └── pages/index.astro     # compone las secciones en orden
 ```
 
