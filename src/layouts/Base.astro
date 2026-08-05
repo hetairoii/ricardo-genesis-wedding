@@ -47,6 +47,17 @@ const canonicalUrl = new URL(Astro.url.pathname, Astro.site ?? Astro.url.origin)
 			// visible -> oculto que produciría añadir esta clase después.
 			document.documentElement.classList.add('js-reveal-enabled');
 		</script>
+
+		<script is:inline>
+			// Sobre de apertura: solo se bloquea la página si aún no se abrió en esta sesión.
+			// try/catch porque sessionStorage puede lanzar en modos de navegación privada
+			// estrictos; si falla, no se bloquea nada (el sobre nunca puede impedir el acceso).
+			try {
+				if (!sessionStorage.getItem('sobre-abierto')) {
+					document.documentElement.classList.add('gate-locked');
+				}
+			} catch (e) {}
+		</script>
 	</head>
 	<body>
 		<slot />

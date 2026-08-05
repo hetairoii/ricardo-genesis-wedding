@@ -10,23 +10,36 @@ import SoloAdultos from '../components/secciones/SoloAdultos.astro';
 import RSVP from '../components/secciones/RSVP.astro';
 import Footer from '../components/secciones/Footer.astro';
 import FloatingRsvp from '../components/FloatingRsvp.astro';
+import SobreApertura from '../components/SobreApertura.astro';
 import { couple, weddingDateDisplay } from '../data/wedding';
-import Music_Player from '../components/Music_Player.astro';
 
 const title = `${couple.groomFirstName} & ${couple.brideFirstName} · ${weddingDateDisplay.day} ${weddingDateDisplay.month} ${weddingDateDisplay.year}`;
 const description = `Acompáñanos a celebrar la boda de ${couple.groom} y ${couple.bride} el ${weddingDateDisplay.day} de ${weddingDateDisplay.month} de ${weddingDateDisplay.year}.`;
 ---
 
 <Base title={title} description={description}>
-	<Music_Player />
-	<Hero />
-	<InvitacionFormal />
-	<Countdown />
-	<FechaLugar />
-	<Programa />
-	<DressCode />
-	<SoloAdultos />
-	<RSVP />
-	<Footer />
-	<FloatingRsvp />
+	<SobreApertura />
+
+	<div id="invitacion-contenido">
+		<script is:inline>
+			// Se ejecuta al llegar aquí el parser, antes de pintar el resto del contenido:
+			// si el sobre está bloqueando la página (misma comprobación que en el <head>),
+			// este contenedor queda inert -- inalcanzable por teclado/lector de pantalla --
+			// hasta que sobre-apertura.ts lo libere al terminar la animación de apertura.
+			if (document.documentElement.classList.contains('gate-locked')) {
+				document.getElementById('invitacion-contenido').inert = true;
+			}
+		</script>
+
+		<Hero />
+		<InvitacionFormal />
+		<Countdown />
+		<FechaLugar />
+		<Programa />
+		<DressCode />
+		<SoloAdultos />
+		<RSVP />
+		<Footer />
+		<FloatingRsvp />
+	</div>
 </Base>
