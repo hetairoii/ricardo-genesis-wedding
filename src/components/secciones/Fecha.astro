@@ -1,0 +1,15 @@
+---
+import Section from '../Section.astro';
+import Ornament from '../Ornament.astro';
+import { weddingDateDisplay } from '../../data/wedding';
+---
+
+<Section id="fecha" background="white">
+	<div class="text-center">
+		<p class="font-label text-xl tracking-[0.3em] text-deep uppercase">Fecha</p>
+		<p class="mt-4 font-serif text-2xl text-ink">{weddingDateDisplay.weekday}</p>
+		<p class="font-serif text-4xl text-dusty sm:text-5xl">{weddingDateDisplay.day} de {weddingDateDisplay.month}</p>
+		<p class="font-serif text-2xl text-ink">{weddingDateDisplay.year}</p>
+		<Ornament class="mt-6" />
+	</div>
+</Section>

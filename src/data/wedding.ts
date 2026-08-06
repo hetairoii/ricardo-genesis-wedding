@@ -15,7 +15,7 @@ export const couple = {
 /** Opcional: dejar los arreglos vacíos si no se desea mostrar a los padres en la invitación. */
 export const parents = {
   groom: ['Jose marquez', 'Maria zambrano'] as string[], // ej. ['Juan Márquez', 'María Pérez de Márquez']
-  bride: ['Marcos Caldera', 'Amadora Carballo'] as string[],
+  bride: ['Marcos Sergio Caldera Delgado', 'Amadora del Carmen Carballo Frías'] as string[],
 };
 
 /** Sección "Gratitud", entre el Hero y la Invitación formal. `highlight` se destaca tipográficamente. */
@@ -62,26 +62,9 @@ export const venue = {
 
 export const dressCode = {
   label: 'Formal / Elegante',
-  note: 'Los novios reservan para sí los colores indicados abajo. Se agradece a los invitados asistir en un color diferente a estos.',
+  note: 'Nos reservamos los colores',
   reservedColors: ['Blanco', 'Gris', 'Celeste'],
 };
-
-export const adultsOnlyNote =
-  'Con todo el cariño, hemos reservado esta celebración para nuestros invitados adultos. Agradecemos de corazón su comprensión.';
-
-export type ProgramItem = {
-  time: string;
-  title: string;
-  description?: string;
-};
-
-export const program: ProgramItem[] = [
-  { time: '5:00 PM', title: 'Ceremonia', description: 'PENDIENTE: lugar de la ceremonia' },
-  { time: '6:00 PM', title: 'Cóctel de bienvenida' },
-  { time: '7:00 PM', title: 'Recepción y cena' },
-  { time: '8:30 PM', title: 'Primer baile' },
-  { time: '9:00 PM', title: 'Fiesta' },
-];
 
 export type RsvpContact = {
   name: string;
