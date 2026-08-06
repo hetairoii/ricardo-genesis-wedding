@@ -1,0 +1,21 @@
+---
+interface Props {
+	class?: string;
+}
+
+const { class: className } = Astro.props;
+---
+
+<svg
+	class:list={['text-deep/20', className]}
+	viewBox="0 0 800 200"
+	preserveAspectRatio="none"
+	xmlns="http://www.w3.org/2000/svg"
+	aria-hidden="true"
+	role="presentation"
+>
+	<path
+		d="M0 200 L0 120 C120 60 220 150 340 90 C460 30 540 140 660 80 C720 50 770 90 800 70 L800 200 Z"
+		fill="currentColor"
+	/>
+</svg>

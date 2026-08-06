@@ -1,15 +1,35 @@
 ---
 import Section from '../Section.astro';
-import Ornament from '../Ornament.astro';
+import LaurelOrnament from '../LaurelOrnament.astro';
+import HillShape from '../HillShape.astro';
 import { weddingDateDisplay } from '../../data/wedding';
 ---
 
-<Section id="fecha" background="white">
-	<div class="text-center">
-		<p class="font-label text-xl tracking-[0.3em] text-deep uppercase">Fecha</p>
-		<p class="mt-4 font-serif text-2xl text-ink">{weddingDateDisplay.weekday}</p>
-		<p class="font-serif text-4xl text-dusty sm:text-5xl">{weddingDateDisplay.day} de {weddingDateDisplay.month}</p>
-		<p class="font-serif text-2xl text-ink">{weddingDateDisplay.year}</p>
-		<Ornament class="mt-6" />
+<Section id="fecha" background="ivory" class="relative overflow-hidden">
+	<div class="relative z-10 text-center">
+		<p class="font-label text-sm tracking-[0.4em] text-deep uppercase">{weddingDateDisplay.month}</p>
+
+		<div class="mt-6 grid grid-cols-3 items-center gap-2">
+			<p
+				class="justify-self-end border-t border-b border-champagne/60 px-2 py-2 font-label text-sm tracking-[0.25em] text-ink uppercase sm:text-base"
+			>
+				{weddingDateDisplay.weekday}
+			</p>
+			<p class="font-serif text-6xl text-ink sm:text-7xl">{weddingDateDisplay.day}</p>
+			<p
+				class="justify-self-start border-t border-b border-champagne/60 px-2 py-2 font-label text-sm tracking-[0.25em] text-ink uppercase sm:text-base"
+			>
+				{weddingDateDisplay.year}
+			</p>
+		</div>
+
+		<LaurelOrnament class="mx-auto mt-6" />
+
+		<span class="mx-auto mt-8 block h-px w-full max-w-xs bg-champagne"></span>
+
+		<!-- Espacio reservado para el arreglo floral (pendiente). -->
+		<div class="h-32 w-full sm:h-40"></div>
 	</div>
+
+	<HillShape class="pointer-events-none absolute inset-x-0 bottom-0 h-24 w-full sm:h-32" />
 </Section>

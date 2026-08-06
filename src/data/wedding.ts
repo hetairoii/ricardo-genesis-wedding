@@ -14,7 +14,7 @@ export const couple = {
 
 /** Opcional: dejar los arreglos vacíos si no se desea mostrar a los padres en la invitación. */
 export const parents = {
-  groom: ['Jose marquez', 'Maria zambrano'] as string[], // ej. ['Juan Márquez', 'María Pérez de Márquez']
+  groom: ['José Eliazar Márquez ', 'María Josefa Zambrano'] as string[], // ej. ['Juan Márquez', 'María Pérez de Márquez']
   bride: ['Marcos Sergio Caldera Delgado', 'Amadora del Carmen Carballo Frías'] as string[],
 };
 
