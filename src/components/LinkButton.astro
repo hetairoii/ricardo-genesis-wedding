@@ -6,10 +6,11 @@ interface Props {
 	variant?: 'outline' | 'solid';
 	/** 'fixed' (por defecto, w-80) para uso suelto; 'full' para que ocupe el ancho de su contenedor, ej. una columna. */
 	width?: 'fixed' | 'full';
+	id?: string;
 	class?: string;
 }
 
-const { href, external = false, download, variant = 'outline', width = 'fixed', class: className } = Astro.props;
+const { href, external = false, download, variant = 'outline', width = 'fixed', id, class: className } = Astro.props;
 
 const variantClass = {
 	outline: 'border border-deep text-deep hover:bg-deep hover:text-white',
@@ -23,6 +24,7 @@ const widthClass = {
 ---
 
 <a
+	id={id}
 	href={href}
 	download={download}
 	target={external ? '_blank' : undefined}

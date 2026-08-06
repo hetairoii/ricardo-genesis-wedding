@@ -19,6 +19,12 @@
   --color-ink: #2e3a4f;
   --color-champagne: #c0a57e;
 
+  /* Acotados a la portada del sobre (src/components/SobreApertura.astro) -- el resto de la
+   * invitación sigue en azul empolvado/marfil. --color-wax verificado 7.5:1 con blanco encima. */
+  --color-sand: #e6d9c2;
+  --color-sand-deep: #d3c3a6;
+  --color-wax: #9b2c2c;
+
   --font-serif: var(--astro-font-serif), Georgia, serif;
   --font-script: var(--astro-font-script), cursive;
   --font-label: var(--astro-font-label), Helvetica, Arial, sans-serif;
@@ -124,6 +130,15 @@
     }
   }
 
+  @keyframes sobre-arrow-fade {
+    from {
+      opacity: 1;
+    }
+    to {
+      opacity: 0;
+    }
+  }
+
   .sobre-flap-group {
     transform-box: fill-box;
     transform-origin: 50% 0%;
@@ -131,6 +146,10 @@
 
   .is-opening .sobre-flap-group {
     animation: sobre-flap-open 450ms ease-in forwards;
+  }
+
+  .is-opening .sobre-arrow {
+    animation: sobre-arrow-fade 200ms ease-out forwards;
   }
 
   #sobre-card {
@@ -150,7 +169,8 @@
   /* Debe ir después de las reglas .is-opening para ganar el empate de especificidad. */
   @media (prefers-reduced-motion: reduce) {
     .is-opening .sobre-flap-group,
-    .is-opening #sobre-card {
+    .is-opening #sobre-card,
+    .is-opening .sobre-arrow {
       animation: none;
     }
 

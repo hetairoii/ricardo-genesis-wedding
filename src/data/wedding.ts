@@ -67,18 +67,27 @@ export const dressCode = {
 };
 
 export type RsvpContact = {
+  id: 'groom' | 'bride'; // ancla estable para src/scripts/guest-params.ts, no derivar de `role`
   name: string;
   role: string;
   phone: string; // formato internacional sin signos, ej. "584121234567", o "PENDIENTE"
 };
 
+/**
+ * Personalización por invitado (opcional, vía parámetros de URL, ver src/scripts/guest-params.ts):
+ *   https://sitio.com/?invitado=Familia+Perez&pases=2
+ * Con ambos parámetros válidos (`pases` entero entre 1 y 20), el sobre muestra "Hemos
+ * reservado N lugares en su honor" y el botón de WhatsApp arma el mensaje con esos datos.
+ * Sin ellos, o si alguno es inválido, todo usa el mensaje genérico de abajo -- ningún
+ * enlace sin personalizar se rompe por esto. Los enlaces se arman a mano por cada familia.
+ */
 export const rsvp = {
   deadlineDisplay: '08 de Noviembre de 2026', // ej. "15 de octubre de 2026"
   message:
     'Hola! Confirmo mi asistencia a la boda de Ricardo y Genesis. Somos [nombre / número de personas]: ',
   contacts: [
-    { name: couple.groomFirstName, role: 'Novio', phone: '584245937048' },
-    { name: couple.brideFirstName, role: 'Novia', phone: '584245178795' },
+    { id: 'groom', name: couple.groomFirstName, role: 'Novio', phone: '584245937048' },
+    { id: 'bride', name: couple.brideFirstName, role: 'Novia', phone: '584245178795' },
   ] as RsvpContact[],
 };
 
