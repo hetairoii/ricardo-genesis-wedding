@@ -1,35 +1,62 @@
 ---
+import { Image } from 'astro:assets';
 import Section from '../Section.astro';
-import LaurelOrnament from '../LaurelOrnament.astro';
 import HillShape from '../HillShape.astro';
+import flowersCentered from '../../assets/flowers-centered.png';
+import flowersLateralLeft from '../../assets/flowers-lateral-left.png';
+import flowersLateralRight from '../../assets/flowers-lateral-right.png';
 import { weddingDateDisplay } from '../../data/wedding';
 ---
 
 <Section id="fecha" background="ivory" class="relative overflow-hidden">
-	<div class="relative z-10 text-center">
-		<p class="font-label text-sm tracking-[0.4em] text-deep uppercase">{weddingDateDisplay.month}</p>
+	<!--
+		Layout simple, sin absolute ni recortes: las flores son elementos normales de un `flex`
+		row, a un tamaño fijo cuadrado (w-* + h-*, mismas proporciones que el archivo original)
+		para que se vean completas y nítidas, con un `gap` chico para que queden pegadas al
+		bloque de texto sin superponerse.
+		`flex-wrap`: en celulares muy angostos el bloque SÁBADO/28/2026 ya usa casi todo el
+		ancho disponible; si no entran las 3 piezas en una fila, las flores bajan de línea en
+		vez de desbordarse/cortarse (el bug original con las franjas absolutas).
+		Tamaño de cada flor = las clases w-*/h-* de esa <Image>. Cercanía al texto = el `gap-*`
+		del contenedor de abajo.
+	-->
+	<div class="flex flex-wrap items-center justify-center gap-3 sm:gap-6">
+		<Image
+			src={flowersLateralLeft}
+			alt=""
+			class="h-16 w-16 flex-shrink-0 sm:h-20 sm:w-20 md:h-24 md:w-24"
+		/>
 
-		<div class="mt-6 grid grid-cols-3 items-center gap-2">
-			<p
-				class="justify-self-end border-t border-b border-champagne/60 px-2 py-2 font-label text-sm tracking-[0.25em] text-ink uppercase sm:text-base"
-			>
-				{weddingDateDisplay.weekday}
-			</p>
-			<p class="font-serif text-6xl text-ink sm:text-7xl">{weddingDateDisplay.day}</p>
-			<p
-				class="justify-self-start border-t border-b border-champagne/60 px-2 py-2 font-label text-sm tracking-[0.25em] text-ink uppercase sm:text-base"
-			>
-				{weddingDateDisplay.year}
-			</p>
+		<div class="text-center">
+			<p class="font-label text-sm tracking-[0.4em] text-deep uppercase">{weddingDateDisplay.month}</p>
+
+			<div class="mt-6 grid grid-cols-3 items-center gap-2">
+				<p
+					class="justify-self-end border-t border-b border-champagne/60 px-2 py-2 font-label text-sm tracking-[0.25em] text-ink uppercase sm:text-base"
+				>
+					{weddingDateDisplay.weekday}
+				</p>
+				<p class="font-serif text-6xl text-ink sm:text-7xl">{weddingDateDisplay.day}</p>
+				<p
+					class="justify-self-start border-t border-b border-champagne/60 px-2 py-2 font-label text-sm tracking-[0.25em] text-ink uppercase sm:text-base"
+				>
+					{weddingDateDisplay.year}
+				</p>
+			</div>
+
+			<Image
+				src={flowersCentered}
+				alt=""
+				class="relative z-10 mx-auto mt-6 w-full max-w-[200px] sm:max-w-[240px]"
+			/>
 		</div>
 
-		<LaurelOrnament class="mx-auto mt-6" />
-
-		<span class="mx-auto mt-8 block h-px w-full max-w-xs bg-champagne"></span>
-
-		<!-- Espacio reservado para el arreglo floral (pendiente). -->
-		<div class="h-32 w-full sm:h-40"></div>
+		<Image
+			src={flowersLateralRight}
+			alt=""
+			class="h-16 w-16 flex-shrink-0 sm:h-20 sm:w-20 md:h-24 md:w-24"
+		/>
 	</div>
 
-	<HillShape class="pointer-events-none absolute inset-x-0 bottom-0 h-24 w-full sm:h-32" />
+	<HillShape class="pointer-events-none absolute inset-x-0 bottom-0 h-48 w-full sm:h-64" />
 </Section>

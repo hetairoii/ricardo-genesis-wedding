@@ -3,24 +3,41 @@ import Section from '../Section.astro';
 import { Image } from 'astro:assets';
 import { dressCode } from '../../data/wedding';
 import dressCodeImage from '../../assets/dress-code.png';
+
+/** Swatches reales de cada color a evitar, no derivados de la paleta decorativa del sitio. */
+const colorSwatches: Record<string, string> = {
+	Blanco: '#ffffff',
+	Gris: '#b3b3b3',
+	Celeste: '#a7c7e7',
+};
 ---
 
 <Section id="dress-code" background="sky">
-	<p class="text-center font-label text-xs tracking-[0.3em] text-deep uppercase">Código de vestimenta</p>
+	<p class="text-center font-script text-4xl text-deep md:text-5xl">Código de vestimenta</p>
 	<h2 class="mt-3 text-center font-serif text-3xl text-ink">{dressCode.label}</h2>
 
-	<div class="mx-auto mt-10 max-w-sm overflow-hidden rounded-sm border border-champagne/40">
+	<div class="mx-auto mt-10 max-w-[140px] overflow-hidden rounded-sm border border-champagne/40">
 		<Image
 			src={dressCodeImage}
 			alt="Referencia de vestimenta formal esperada para la boda: traje oscuro para caballeros y vestido largo elegante para damas"
 			class="h-auto w-full"
-			widths={[320, 480, 640]}
-			sizes="(min-width: 640px) 384px, 90vw"
+			widths={[140, 330, 440]}
+			sizes="140px"
 		/>
 	</div>
 
 	<p class="mx-auto mt-8 max-w-[50ch] text-center font-label text-sm text-deep">{dressCode.note}</p>
-	<p class="mt-3 text-center font-label text-sm tracking-[0.2em] text-ink uppercase">
-		{dressCode.reservedColors.join(' · ')}
-	</p>
+	<div class="mt-4 flex justify-center gap-8">
+		{
+			dressCode.reservedColors.map((color) => (
+				<div class="flex flex-col items-center gap-2">
+					<span
+						class="h-9 w-9 rounded-full border border-ink/20"
+						style={`background-color: ${colorSwatches[color] ?? 'transparent'}`}
+					/>
+					<span class="font-label text-sm tracking-[0.2em] text-ink uppercase">{color}</span>
+				</div>
+			))
+		}
+	</div>
 </Section>

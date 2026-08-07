@@ -54,7 +54,7 @@ export const weddingDateDisplay = {
 };
 
 export const venue = {
-  name: 'Grato jardín',
+  name: 'Grato Jardín de Eventos',
   addressLine: 'Av. San Silvestre',
   city: 'Barinas',
   mapsUrl: 'https://maps.app.goo.gl/ZHxaoDKPV9Jt923s6?g_st=ic',

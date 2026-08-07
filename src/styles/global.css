@@ -1,29 +1,33 @@
 @import 'tailwindcss';
 
 /*
- * Tokens de diseño derivados de la paleta de referencia (azul empolvado / marfil).
+ * Paleta cerrada a 5 colores aprobados (no agregar tonos fuera de esta lista):
+ *   Blanco Puro #FFFFFF · Blanco Roto/Marfil #EAEAEA · Azul Cielo Claro #D0DDF2
+ *   · Azul Serenidad #B1C2D4 · Azul Grisáceo Oscuro #7C8FA6.
+ * Los nombres de token heredados (ink, deep, champagne, etc.) se mantienen por
+ * compatibilidad con las clases ya usadas en los componentes, pero cada uno
+ * apunta a uno de los 5 hex de arriba -- no hay colores fuera de esta lista.
  * Tailwind v4 genera utilidades directamente desde este bloque @theme:
  * --color-ivory produce bg-ivory / text-ivory / border-ivory, etc.
- * Contrastes verificados sobre --color-ivory:
- *   ink 10.6:1 (AAA) · deep 6.5:1 (AA todos los tamaños) · dusty 4.4:1 (solo texto >=24px)
- *   · champagne 2.2:1 (solo decorativo, nunca texto).
+ * Aviso de contraste: --color-ink/--color-deep (#7c8fa6, el tono más oscuro
+ * disponible) dan ~3.3:1 sobre blanco/marfil -- por debajo del 4.5:1 AA para
+ * texto normal. Cumple AA solo en texto grande (>=24px o >=18.66px negrita).
  */
 @theme {
-  --color-ivory: #faf7f2;
   --color-white: #ffffff;
-  --color-mist: #e8eaec;
-  --color-sky: #dce3ef;
-  --color-periwinkle: #b7c2da;
-  --color-dusty: #7c8caf;
-  --color-deep: #4a5a7d;
-  --color-ink: #2e3a4f;
-  --color-champagne: #c0a57e;
+  --color-ivory: #eaeaea;
+  --color-mist: #eaeaea;
+  --color-sky: #d0ddf2;
+  --color-periwinkle: #b1c2d4;
+  --color-dusty: #7c8fa6;
+  --color-deep: #7c8fa6;
+  --color-ink: #7c8fa6;
+  --color-champagne: #b1c2d4;
 
-  /* Acotados a la portada del sobre (src/components/SobreApertura.astro) -- el resto de la
-   * invitación sigue en azul empolvado/marfil. --color-wax verificado 7.5:1 con blanco encima. */
-  --color-sand: #e6d9c2;
-  --color-sand-deep: #d3c3a6;
-  --color-wax: #9b2c2c;
+  /* Acotados a la portada del sobre (src/components/SobreApertura.astro) -- misma paleta de 5 colores. */
+  --color-sand: #eaeaea;
+  --color-sand-deep: #d0ddf2;
+  --color-wax: #7c8fa6;
 
   --font-serif: var(--astro-font-serif), Georgia, serif;
   --font-script: var(--astro-font-script), cursive;
