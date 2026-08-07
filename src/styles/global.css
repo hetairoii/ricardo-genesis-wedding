@@ -62,15 +62,31 @@
    */
   html.js-reveal-enabled [data-reveal] {
     opacity: 0;
-    transform: translateY(12px);
+    transform: translateY(28px);
   }
 
+  html.js-reveal-enabled [data-reveal][data-reveal-variant='fade-left'] {
+    transform: translateX(-36px);
+  }
+
+  html.js-reveal-enabled [data-reveal][data-reveal-variant='fade-right'] {
+    transform: translateX(36px);
+  }
+
+  html.js-reveal-enabled [data-reveal][data-reveal-variant='scale'] {
+    transform: scale(0.94);
+  }
+
+  /*
+   * Easing tipo "ease-out-expo": arranca rápido y frena con un aterrizaje muy suave --
+   * más elegante que un ease lineal/simétrico para una revelación de una sola vez.
+   */
   html.js-reveal-enabled [data-reveal].reveal-visible {
     opacity: 1;
-    transform: translateY(0);
+    transform: translateY(0) translateX(0) scale(1);
     transition:
-      opacity 350ms cubic-bezier(0.25, 0.46, 0.45, 0.94),
-      transform 350ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      opacity 700ms cubic-bezier(0.16, 1, 0.3, 1),
+      transform 700ms cubic-bezier(0.16, 1, 0.3, 1);
   }
 
   /* Debe ir después de la regla .reveal-visible para ganar el empate de especificidad. */

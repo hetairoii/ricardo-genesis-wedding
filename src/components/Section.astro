@@ -1,13 +1,17 @@
 ---
+type RevealVariant = 'fade-up' | 'fade-left' | 'fade-right' | 'scale';
+
 interface Props {
 	id?: string;
 	background?: 'ivory' | 'sky' | 'mist' | 'white' | 'deep';
 	/** Desactivar en secciones que deben estar visibles de inmediato, como el hero. */
 	reveal?: boolean;
+	/** Estilo de la animación de entrada al hacer scroll. 'fade-up' es el default histórico. */
+	variant?: RevealVariant;
 	class?: string;
 }
 
-const { id, background = 'ivory', reveal = true, class: className } = Astro.props;
+const { id, background = 'ivory', reveal = true, variant, class: className } = Astro.props;
 
 const bgClass = {
 	ivory: 'bg-ivory',
@@ -22,6 +26,7 @@ const bgClass = {
 	id={id}
 	class:list={[bgClass, 'px-6 py-20 sm:py-28', className]}
 	data-reveal={reveal ? '' : undefined}
+	data-reveal-variant={reveal ? variant : undefined}
 >
 	<div class="mx-auto max-w-3xl">
 		<slot />
