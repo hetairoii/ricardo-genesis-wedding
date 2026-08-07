@@ -1,66 +1,50 @@
 ---
 import { Image } from 'astro:assets';
 import Section from '../Section.astro';
+import Ornament from '../Ornament.astro';
 import HillShape from '../HillShape.astro';
 import flowersCentered from '../../assets/flowers-centered.png';
-import flowersLateralLeft from '../../assets/flowers-lateral-left.png';
-import flowersLateralRight from '../../assets/flowers-lateral-right.png';
 import ornamentalDividerTop from '../../assets/ornamental-divider-top.png';
 import { weddingDateDisplay } from '../../data/wedding';
 ---
 
-<Section id="fecha" background="ivory" class="relative overflow-hidden">
-	<!--
-		Grid de 3 columnas (no flex): las columnas laterales usan `minmax(0, 250px)`, es decir
-		"hasta 250px, pero se pueden achicar a 0 si hace falta" -- a diferencia de flex+wrap,
-		un grid JAMÁS envuelve a otra línea; si las tres piezas no entran en una sola fila,
-		el propio grid encoge las columnas laterales automáticamente en vez de mandar la
-		derecha abajo (el problema anterior).
-		Las <Image> van con `w-full h-auto` (llenan su columna, alto automático preserva la
-		proporción cuadrada) + `max-w-[Npx]` como TECHO, no tamaño fijo -- si la columna se
-		encoge, la imagen encoge con ella.
-		Techo de tamaño: los archivos son 500x500px. En pantallas retina/2x (device pixel ratio
-		2, las más comunes) el navegador necesita 2px reales por cada px CSS, así que el máximo
-		sin perder nitidez es 500/2 = 250px -- por eso el tope en md: es max-w-[250px], no más.
-		Si algún día suben el asset a mayor resolución, este techo puede subir con él.
-	-->
-	<div class="grid grid-cols-[minmax(0,250px)_auto_minmax(0,250px)] items-center justify-center gap-3 sm:gap-6">
-		<Image
-			src={flowersLateralLeft}
-			alt=""
-			class="h-auto w-full max-w-[128px] justify-self-end sm:max-w-[176px] md:max-w-[250px]"
-		/>
+<Section id="fecha" background="ivory" class="relative flex min-h-[34rem] items-center overflow-hidden">
+	<!-- Mismas flores laterales que el resto de secciones (Ornament lateral-left/right):
+	     pegadas al borde de la sección, no encajadas en una columna de grid, para que se vean
+	     igual de grandes aquí que en Honor/RSVP. -->
+	<Ornament variant="lateral-left" class="opacity-90" />
+	<Ornament variant="lateral-right" class="opacity-90" />
 
-		<div class="text-center">
-			<Image src={ornamentalDividerTop} alt="" class="mx-auto mb-4 h-auto w-40 sm:w-48" />
+	<!-- Flores en las 4 esquinas: normales (top-right, bottom-left) + espejadas (top-left,
+	     bottom-right) para cubrir las cuatro. -->
+	<Ornament variant="corner-top-right" class="opacity-90" />
+	<Ornament variant="corner-bottom-left" class="opacity-90" />
+	<Ornament variant="corner-top-right" mirror class="opacity-90" />
+	<Ornament variant="corner-bottom-left" mirror class="opacity-90" />
 
-			<p class="font-label text-sm tracking-[0.4em] text-deep uppercase">{weddingDateDisplay.month}</p>
+	<div class="relative text-center">
+		<Image src={ornamentalDividerTop} alt="" class="mx-auto mb-4 h-auto w-40 sm:w-48" />
 
-			<div class="mt-6 grid grid-cols-3 items-center gap-2">
-				<p
-					class="justify-self-end border-t border-b border-champagne/60 px-2 py-2 font-label text-sm tracking-[0.25em] text-ink uppercase sm:text-base"
-				>
-					{weddingDateDisplay.weekday}
-				</p>
-				<p class="font-serif text-6xl text-ink sm:text-7xl">{weddingDateDisplay.day}</p>
-				<p
-					class="justify-self-start border-t border-b border-champagne/60 px-2 py-2 font-label text-sm tracking-[0.25em] text-ink uppercase sm:text-base"
-				>
-					{weddingDateDisplay.year}
-				</p>
-			</div>
+		<p class="font-label text-sm tracking-[0.4em] text-deep uppercase">{weddingDateDisplay.month}</p>
 
-			<Image
-				src={flowersCentered}
-				alt=""
-				class="relative z-10 mx-auto mt-6 w-full max-w-[200px] sm:max-w-[240px]"
-			/>
+		<div class="mt-6 grid grid-cols-3 items-center gap-2">
+			<p
+				class="justify-self-end border-t border-b border-champagne/60 px-2 py-2 font-label text-sm tracking-[0.25em] text-ink uppercase sm:text-base"
+			>
+				{weddingDateDisplay.weekday}
+			</p>
+			<p class="font-serif text-6xl text-ink sm:text-7xl">{weddingDateDisplay.day}</p>
+			<p
+				class="justify-self-start border-t border-b border-champagne/60 px-2 py-2 font-label text-sm tracking-[0.25em] text-ink uppercase sm:text-base"
+			>
+				{weddingDateDisplay.year}
+			</p>
 		</div>
 
 		<Image
-			src={flowersLateralRight}
+			src={flowersCentered}
 			alt=""
-			class="h-auto w-full max-w-[128px] justify-self-start sm:max-w-[176px] md:max-w-[250px]"
+			class="relative z-10 mx-auto mt-6 w-full max-w-[200px] sm:max-w-[240px]"
 		/>
 	</div>
 

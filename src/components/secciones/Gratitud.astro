@@ -6,17 +6,20 @@ import catholicCross from '../../assets/catholic-cross.png';
 import { gratitudNote } from '../../data/wedding';
 ---
 
-<Section id="gratitud" background="ivory">
-	<Image src={catholicCross} alt="" class="mx-auto mb-6 h-16 w-auto" />
+<Section id="gratitud" background="ivory" class="relative overflow-hidden">
+	<Ornament variant="corner-top-right" class="opacity-90" />
+	<Ornament variant="corner-bottom-left" class="opacity-90" />
 
-	<Ornament class="mb-8" variant="top" />
+	<Image src={catholicCross} alt="" class="relative mx-auto mb-6 h-16 w-auto" />
 
-	<div class="mx-auto max-w-[65ch] rounded-sm bg-deep px-6 py-10 sm:px-12 sm:py-14">
+	<Ornament class="relative mb-8" variant="top" />
+
+	<div class="relative mx-auto max-w-[65ch] rounded-sm bg-deep px-6 py-10 sm:px-12 sm:py-14">
 		<p class="text-center font-serif text-lg leading-relaxed text-white italic md:text-2xl">
 			{gratitudNote.body}<br>
 			<span class="font-serif text-2xl font-semibold text-champagne italic md:text-4xl">{gratitudNote.highlight}</span>.
 		</p>
 	</div>
 
-	<Ornament class="mt-8" variant="bottom" />
+	<Ornament class="relative mt-8" variant="bottom" />
 </Section>

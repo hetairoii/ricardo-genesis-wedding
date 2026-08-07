@@ -5,11 +5,11 @@ import weddingLogo from '../../assets/wedding-logo.png';
 import { couple, weddingDateDisplay } from '../../data/wedding';
 ---
 
-<footer class="bg-ink px-6 py-24 text-center">
-	<Image src={weddingLogo} alt={`Monograma de ${couple.groomFirstName} y ${couple.brideFirstName}`} class="mx-auto h-24 w-auto sm:h-28" />
-	<Ornament class="my-4" variant="top" />
-	<p class="font-label text-xl tracking-[0.2em] text-white/70 uppercase">
+<footer class="relative overflow-hidden bg-ink px-6 py-24 text-center">
+	<Image src={weddingLogo} alt={`Monograma de ${couple.groomFirstName} y ${couple.brideFirstName}`} class="relative mx-auto h-24 w-auto sm:h-28" />
+	<Ornament class="relative my-4" variant="top" />
+	<p class="relative font-label text-xl tracking-[0.2em] text-white/70 uppercase">
 		{weddingDateDisplay.day} de {weddingDateDisplay.month} de {weddingDateDisplay.year}
 	</p>
-	<p class="mt-2 font-label text-lg tracking-[0.15em] text-white/70">{couple.hashtag}</p>
+	<p class="relative mt-2 font-label text-lg tracking-[0.15em] text-white/70">{couple.hashtag}</p>
 </footer>

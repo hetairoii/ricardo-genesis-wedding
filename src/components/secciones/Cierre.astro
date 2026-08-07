@@ -6,10 +6,13 @@ import { cierreNote } from '../../data/wedding';
 const paragraphs = cierreNote.body.split('\n\n');
 ---
 
-<Section id="cierre" background="ivory">
-	<Ornament class="mb-8" variant="top" />
+<Section id="cierre" background="ivory" class="relative overflow-hidden">
+	<Ornament variant="corner-top-right" mirror class="opacity-90" />
+	<Ornament variant="corner-bottom-left" mirror class="opacity-90" />
 
-	<div class="mx-auto max-w-[55ch] text-center">
+	<Ornament class="relative mb-8" variant="top" />
+
+	<div class="relative mx-auto max-w-[55ch] text-center">
 		<div class="space-y-4">
 			{
 				paragraphs.map((paragraph) => (
@@ -26,5 +29,5 @@ const paragraphs = cierreNote.body.split('\n\n');
 		</cite>
 	</div>
 
-	<Ornament class="mt-8" variant="bottom" />
+	<Ornament class="relative mt-8" variant="bottom" />
 </Section>
