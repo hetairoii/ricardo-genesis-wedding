@@ -5,29 +5,35 @@ import HillShape from '../HillShape.astro';
 import flowersCentered from '../../assets/flowers-centered.png';
 import flowersLateralLeft from '../../assets/flowers-lateral-left.png';
 import flowersLateralRight from '../../assets/flowers-lateral-right.png';
+import ornamentalDividerTop from '../../assets/ornamental-divider-top.png';
 import { weddingDateDisplay } from '../../data/wedding';
 ---
 
 <Section id="fecha" background="ivory" class="relative overflow-hidden">
 	<!--
-		Layout simple, sin absolute ni recortes: las flores son elementos normales de un `flex`
-		row, a un tamaño fijo cuadrado (w-* + h-*, mismas proporciones que el archivo original)
-		para que se vean completas y nítidas, con un `gap` chico para que queden pegadas al
-		bloque de texto sin superponerse.
-		`flex-wrap`: en celulares muy angostos el bloque SÁBADO/28/2026 ya usa casi todo el
-		ancho disponible; si no entran las 3 piezas en una fila, las flores bajan de línea en
-		vez de desbordarse/cortarse (el bug original con las franjas absolutas).
-		Tamaño de cada flor = las clases w-*/h-* de esa <Image>. Cercanía al texto = el `gap-*`
-		del contenedor de abajo.
+		Grid de 3 columnas (no flex): las columnas laterales usan `minmax(0, 250px)`, es decir
+		"hasta 250px, pero se pueden achicar a 0 si hace falta" -- a diferencia de flex+wrap,
+		un grid JAMÁS envuelve a otra línea; si las tres piezas no entran en una sola fila,
+		el propio grid encoge las columnas laterales automáticamente en vez de mandar la
+		derecha abajo (el problema anterior).
+		Las <Image> van con `w-full h-auto` (llenan su columna, alto automático preserva la
+		proporción cuadrada) + `max-w-[Npx]` como TECHO, no tamaño fijo -- si la columna se
+		encoge, la imagen encoge con ella.
+		Techo de tamaño: los archivos son 500x500px. En pantallas retina/2x (device pixel ratio
+		2, las más comunes) el navegador necesita 2px reales por cada px CSS, así que el máximo
+		sin perder nitidez es 500/2 = 250px -- por eso el tope en md: es max-w-[250px], no más.
+		Si algún día suben el asset a mayor resolución, este techo puede subir con él.
 	-->
-	<div class="flex flex-wrap items-center justify-center gap-3 sm:gap-6">
+	<div class="grid grid-cols-[minmax(0,250px)_auto_minmax(0,250px)] items-center justify-center gap-3 sm:gap-6">
 		<Image
 			src={flowersLateralLeft}
 			alt=""
-			class="h-16 w-16 flex-shrink-0 sm:h-20 sm:w-20 md:h-24 md:w-24"
+			class="h-auto w-full max-w-[128px] justify-self-end sm:max-w-[176px] md:max-w-[250px]"
 		/>
 
 		<div class="text-center">
+			<Image src={ornamentalDividerTop} alt="" class="mx-auto mb-4 h-auto w-40 sm:w-48" />
+
 			<p class="font-label text-sm tracking-[0.4em] text-deep uppercase">{weddingDateDisplay.month}</p>
 
 			<div class="mt-6 grid grid-cols-3 items-center gap-2">
@@ -54,7 +60,7 @@ import { weddingDateDisplay } from '../../data/wedding';
 		<Image
 			src={flowersLateralRight}
 			alt=""
-			class="h-16 w-16 flex-shrink-0 sm:h-20 sm:w-20 md:h-24 md:w-24"
+			class="h-auto w-full max-w-[128px] justify-self-start sm:max-w-[176px] md:max-w-[250px]"
 		/>
 	</div>
 
