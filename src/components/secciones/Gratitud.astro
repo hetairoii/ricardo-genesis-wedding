@@ -2,8 +2,9 @@
 import { Image } from 'astro:assets';
 import Section from '../Section.astro';
 import Ornament from '../Ornament.astro';
+import PhotoCard from '../contenedores/PhotoCard.astro';
 import catholicCross from '../../assets/catholic-cross.png';
-import { gratitudNote } from '../../data/wedding';
+import { couple, gratitudNote } from '../../data/wedding';
 ---
 
 <Section id="gratitud" background="ivory" class="relative overflow-hidden">
@@ -19,6 +20,23 @@ import { gratitudNote } from '../../data/wedding';
 			{gratitudNote.body}<br>
 			<span class="font-serif text-2xl font-semibold text-champagne italic md:text-4xl">{gratitudNote.highlight}</span>.
 		</p>
+	</div>
+
+	<!--
+		Foto apaisada bajo la cita: corta el bloque azul de texto, que era el muro más largo
+		de la parte alta de la invitación, y da el primer respiro visual después del hero.
+		Va con margen negativo para solaparse con el borde inferior del bloque, como una foto
+		apoyada sobre la tarjeta y no como una fila más de la sección. El solape se queda en
+		16px (menos que el padding inferior del bloque, 40px en móvil) para que muerda el borde
+		azul sin llegar a pegarse a la última línea de la cita.
+	-->
+	<div class="relative mx-auto -mt-4 w-[min(20rem,78%)]">
+		<PhotoCard
+			alt={`${couple.groomFirstName} y ${couple.brideFirstName}`}
+			ratio="landscape"
+			tone="gold"
+			caption="Nuestra historia"
+		/>
 	</div>
 
 	<Ornament class="relative mt-8" variant="bottom" />

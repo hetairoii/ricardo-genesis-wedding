@@ -1,0 +1,90 @@
+---
+/*
+	Cadena metálica vertical, para "colgar" una tarjeta de otra (hero).
+
+	Se dibuja en SVG y no con imágenes: a este grosor un PNG se vería sucio al escalar, y
+	el degradado dorado tiene que poder cambiar desde los tokens (--color-gold*) sin volver
+	a exportar nada.
+
+	Un eslabón = dos óvalos alternados (uno vertical, uno horizontal) que se solapan la mitad
+	de su alto; ese solape es lo que hace leer la cadena como eslabones enganchados y no como
+	una fila de anillos sueltos. El patrón se repite hasta cubrir `height`, así que la cadena
+	crece en número de eslabones y NO estirando el eslabón (un `preserveAspectRatio` elástico
+	deformaría el óvalo en cuanto la altura cambiara entre móvil y escritorio).
+
+	Los ids de <linearGradient> son globales al documento: si dos cadenas usaran el mismo id,
+	la segunda heredaría el degradado de la primera. Por eso cada instancia genera el suyo.
+*/
+interface Props {
+	/** Alto de la cadena en px. Se redondea al múltiplo de eslabón más cercano. */
+	height?: number;
+	/** Argolla de enganche en los extremos (el "ojal" del que cuelga cada tarjeta). */
+	rings?: boolean;
+	class?: string;
+}
+
+const { height = 96, rings = true, class: className } = Astro.props;
+
+const uid = `chain-${Math.random().toString(36).slice(2, 9)}`;
+
+// Geometría de un eslabón, en unidades del viewBox (ancho 24).
+const cx = 12;
+const step = 9; // avance vertical por óvalo; el óvalo mide ~14 de alto -> ~35% de solape
+const ovalRy = 7;
+const ovalRx = 4.4;
+const ringR = 5.2;
+
+const ringSpace = rings ? ringR * 2 + 2 : 0;
+const chainSpan = Math.max(step * 2, height - ringSpace * 2);
+const linkCount = Math.max(2, Math.round(chainSpan / step));
+
+const top = ringSpace;
+const totalHeight = ringSpace * 2 + linkCount * step;
+
+const links = Array.from({ length: linkCount }, (_, i) => ({
+	cy: top + step * i + step / 2,
+	// Alterna vertical / horizontal: los pares giran 90°, que es lo que engancha con el anterior.
+	vertical: i % 2 === 0,
+}));
+---
+
+<svg
+	class:list={['pointer-events-none block', className]}
+	width="24"
+	height={totalHeight}
+	viewBox={`0 0 24 ${totalHeight}`}
+	fill="none"
+	aria-hidden="true"
+	focusable="false"
+>
+	<defs>
+		<linearGradient id={uid} x1="0" y1="0" x2="1" y2="0">
+			<stop offset="0%" stop-color="var(--color-gold-dark)"></stop>
+			<stop offset="35%" stop-color="var(--color-gold-light)"></stop>
+			<stop offset="60%" stop-color="var(--color-gold)"></stop>
+			<stop offset="100%" stop-color="var(--color-gold-dark)"></stop>
+		</linearGradient>
+	</defs>
+
+	<g stroke={`url(#${uid})`} stroke-width="2">
+		{
+			rings && (
+				<>
+					<circle cx={cx} cy={ringR + 1} r={ringR} stroke-width="2.4" />
+					<circle cx={cx} cy={totalHeight - ringR - 1} r={ringR} stroke-width="2.4" />
+				</>
+			)
+		}
+
+		{
+			links.map((link) => (
+				<ellipse
+					cx={cx}
+					cy={link.cy}
+					rx={link.vertical ? ovalRx : ovalRy}
+					ry={link.vertical ? ovalRy : ovalRx}
+				/>
+			))
+		}
+	</g>
+</svg>

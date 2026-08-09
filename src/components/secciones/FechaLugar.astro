@@ -3,6 +3,7 @@ import { Image } from 'astro:assets';
 import Section from '../Section.astro';
 import Ornament from '../Ornament.astro';
 import LinkButton from '../LinkButton.astro';
+import PhotoCard from '../contenedores/PhotoCard.astro';
 import weddingArch from '../../assets/wedding-arch.png';
 import { weddingDateDisplay, venue } from '../../data/wedding';
 
@@ -22,7 +23,7 @@ const venueRest = venueRestWords.join(' ');
 
 	<div class="relative mt-12 text-center">
 		<p class="font-label text-xl tracking-[0.3em] text-deep uppercase">Ceremonia y festejo</p>
-		<p class="mt-4 font-serif text-4xl text-ink">
+		<p class="mt-4 font-serif text-4xl text-ink italic">
 			{venueFirstWord}
 			{venueRest && (
 				<>
@@ -35,6 +36,21 @@ const venueRest = venueRestWords.join(' ');
 		<p class="mt-2 font-label text-xl tracking-[0.2em] text-deep uppercase">
 			{weddingDateDisplay.time} {weddingDateDisplay.timezone}
 		</p>
+
+		<!--
+			Foto del lugar entre el dato y el botón: quien llega aquí ya sabe DÓNDE es, ve el
+			sitio, y solo entonces se le ofrece "Cómo llegar". El arco repite la silueta del
+			wedding-arch.png de la cabecera de esta misma sección.
+		-->
+		<div class="mx-auto mt-10 w-[min(22rem,80%)]">
+			<PhotoCard
+				alt={`Fotografía de ${venue.name}, ${venue.addressLine}`}
+				ratio="landscape"
+				shape="arch"
+				tone="gold"
+				caption={venue.city}
+			/>
+		</div>
 
 		{
 			hasMapsUrl && (

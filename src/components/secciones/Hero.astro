@@ -1,25 +1,65 @@
 ---
-import PhotoSlot from '../PhotoSlot.astro';
+import PlaqueCard from '../contenedores/PlaqueCard.astro';
+import PhotoCard from '../contenedores/PhotoCard.astro';
+import HangingChain from '../contenedores/HangingChain.astro';
+import Ornament from '../Ornament.astro';
 import { couple } from '../../data/wedding';
 ---
 
-<section id="hero" class="relative flex h-[100svh] items-center justify-center overflow-hidden">
-	<div class="absolute inset-0">
-		<PhotoSlot alt={`${couple.groom} y ${couple.bride}`} ratio="cover" priority class="h-full w-full" />
-	</div>
+<!--
+	Alto mínimo, no fijo: el conjunto placa + cadena + foto colgada es bastante más alto que
+	el panel que había antes, y con `h-[100svh]` el bloque se recortaba en móviles bajos en
+	vez de empujar la sección. `justify-center` sigue centrándolo cuando sí cabe.
+-->
+<section
+	id="hero"
+	class="relative flex min-h-[100svh] flex-col items-center justify-center overflow-hidden bg-mist px-6 py-20"
+>
+	<!-- Flores de esquina (Ornament), para que el hero luzca consistente con Fecha/Honor/RSVP
+	     ahora que ya no tiene la foto de fondo. Sin laterales: dejan más aire junto a la placa. -->
+	<Ornament variant="corner-top-right" class="opacity-90" />
+	<Ornament variant="corner-bottom-left" class="opacity-90" />
+	<Ornament variant="corner-top-right" mirror class="opacity-90" />
+	<Ornament variant="corner-bottom-left" mirror class="opacity-90" />
 
 	<!--
-		Panel esmerilado detrás del texto, en vez de un velo a página completa: mantiene la foto
-		visible (tono editorial) y a la vez garantiza contraste de texto sin importar qué foto llegue.
+		`isolate` (stacking context propio) es imprescindible aquí: sin él, el `-z-10` de las
+		cadenas las mandaría detrás de la foto de fondo de la sección -- que es un elemento
+		posicionado y, por tanto, pinta por encima de todo z-index negativo del contexto raíz.
 	-->
-	<div class="relative rounded-sm bg-ivory/45 px-8 py-12 text-center backdrop-blur-sm sm:px-16 sm:py-16">
-		<h1 id="hero-heading" tabindex="-1" class="mt-6 font-serif text-4xl text-ink sm:text-6xl focus:outline-none">
-			{couple.groomFirstName}
-			<span class="mx-2 inline-block align-middle font-script text-5xl text-dusty sm:text-7xl">&amp;</span>
-			{couple.brideFirstName}
-		</h1>
-		<p class="font-label text-xs tracking-[0.35em] text-deep uppercase sm:text-sm">Nos casamos</p>
-		<p class="mt-6 font-label text-sm tracking-[0.3em] text-deep">28 · 11 · 2026</p>
+	<div class="relative isolate flex w-full flex-col items-center">
+		<PlaqueCard tone="deep" size="lg" class="w-[min(24rem,86vw)] shadow-md">
+			<p class="font-label text-xs tracking-[0.35em] text-white/80 uppercase sm:text-sm">Nos casamos</p>
+
+			<h1 id="hero-heading" tabindex="-1" class="mt-5 font-script text-5xl text-white sm:text-6xl focus:outline-none">
+				{couple.groomFirstName}
+				<span class="mx-2 inline-block align-middle text-champagne"> &amp; </span>
+				{couple.brideFirstName}
+			</h1>
+
+			<p class="mt-5 font-label text-sm tracking-[0.3em] text-white/80">28 · 11 · 2026</p>
+		</PlaqueCard>
+
+		<!--
+			Las cadenas cuelgan de los puntos donde el bisel de la placa se vuelve borde recto,
+			no de las esquinas: a ~70% del ancho quedan dentro de la parte plana de la base, que
+			es de donde podría colgar algo de verdad. Van con margen negativo para que la argolla
+			superior se meta bajo la placa y se lea enganchada, no apoyada.
+			`-z-10` mete el par de cadenas por detrás de ambas tarjetas -- así las argollas se
+			ocultan a medias bajo cada una en vez de flotar encima del borde.
+		-->
+		<div class="relative -z-10 -mt-3 flex w-[min(14rem,52vw)] justify-between" aria-hidden="true">
+			<HangingChain height={80} />
+			<HangingChain height={80} />
+		</div>
+
+		<PhotoCard
+			alt={`Fotografía de ${couple.groomFirstName} y ${couple.brideFirstName}`}
+			ratio="square"
+			tone="gold"
+			priority
+			class="-mt-3 w-[min(14rem,52vw)]"
+		/>
 	</div>
 
 	<div

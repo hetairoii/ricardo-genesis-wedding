@@ -21,7 +21,7 @@ export default defineConfig({
     },
     {
       provider: fontProviders.google(),
-      name: 'Great Vibes',
+      name: 'Alex Brush',
       cssVariable: '--astro-font-script',
       weights: [400],
       styles: ['normal'],

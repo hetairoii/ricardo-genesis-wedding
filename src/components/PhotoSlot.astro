@@ -1,7 +1,7 @@
 ---
 import { Image } from 'astro:assets';
 import type { ImageMetadata } from 'astro';
-import weddingLogo from '../assets/wedding-logo.png';
+import refPhoto from '../assets/ref-photo.webp';
 
 interface Props {
 	/** Cuando llegue la foto real, pasar aquí el resultado de un `import ... from '...jpg'`. */
@@ -10,10 +10,22 @@ interface Props {
 	alt: string;
 	ratio?: 'portrait' | 'landscape' | 'square' | 'cover';
 	priority?: boolean;
+	/** Filete interior propio. Se apaga cuando el hueco ya va dentro de un marco (PhotoCard). */
+	innerBorder?: boolean;
+	/** Degradado del placeholder cuando no hay `src`. 'pale' = el histórico (marfil/cielo/serenidad), 'deep' = más saturado (cielo/serenidad/gris-azulado), para secciones grandes como el hero. */
+	placeholderTone?: 'pale' | 'deep';
 	class?: string;
 }
 
-const { src, alt, ratio = 'landscape', priority = false, class: className } = Astro.props;
+const {
+	src=refPhoto,
+	alt=refPhoto,
+	ratio = 'landscape',
+	priority = false,
+	innerBorder = true,
+	placeholderTone = 'pale',
+	class: className,
+} = Astro.props;
 
 const ratioClass = {
 	portrait: 'aspect-[3/4]',
@@ -35,12 +47,16 @@ const ratioClass = {
 				decoding="async"
 			/>
 		) : (
-			<div class="photo-slot-placeholder h-full w-full" role="presentation" aria-hidden="true">
-				<Image src={weddingLogo} alt="" class="photo-slot-monogram" />
+			<div
+				class:list={['photo-slot-placeholder h-full w-full', placeholderTone === 'deep' && 'photo-slot-placeholder--deep']}
+				role="presentation"
+				aria-hidden="true"
+			>
+
 			</div>
 		)
 	}
-	<div class="border-champagne/40 pointer-events-none absolute inset-3 border sm:inset-4"></div>
+	{innerBorder && <div class="border-champagne/40 pointer-events-none absolute inset-3 border sm:inset-4" />}
 </div>
 
 <style>
@@ -50,6 +66,13 @@ const ratioClass = {
 		align-items: center;
 		justify-content: center;
 		background: linear-gradient(135deg, var(--color-ivory) 0%, var(--color-sky) 55%, var(--color-periwinkle) 100%);
+	}
+
+	/* Mismo trío de tonos que el resto del sitio, pero sin el marfil pálido de entrada:
+	   arranca ya en azul cielo y cierra en el gris-azulado más oscuro de la paleta, para
+	   una sección grande (el hero) donde el degradado pálido se leía casi blanco. */
+	.photo-slot-placeholder--deep {
+		background: linear-gradient(135deg, var(--color-sky) 0%, var(--color-periwinkle) 55%, var(--color-dusty) 100%);
 	}
 
 	/* Grano sutil: capa de ruido a opacidad fija y baja, nunca mezclada a intensidad completa. */

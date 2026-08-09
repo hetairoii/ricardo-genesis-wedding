@@ -24,6 +24,19 @@
   --color-ink: #7c8fa6;
   --color-champagne: #b1c2d4;
 
+  /*
+   * Acento "metal" para la cadena del hero y los marcos de foto (mismo rol que tenía el
+   * dorado antes): degradado de peltre/plata dentro de los 5 hex aprobados, no un tono nuevo.
+   * Claro = Azul Cielo #D0DDF2, medio = Azul Serenidad #B1C2D4, oscuro = Azul Grisáceo
+   * Oscuro #7C8FA6 -- los mismos tres que ya usan --color-sky/--color-champagne/--color-dusty,
+   * solo re-expuestos con estos nombres para no reescribir cadena/marco componente por
+   * componente. Se usa solo como metal (cadena, filete de marco, argollas), nunca como fondo
+   * de bloque ni como color de texto de párrafo.
+   */
+  --color-gold: #b1c2d4;
+  --color-gold-light: #d0ddf2;
+  --color-gold-dark: #7c8fa6;
+
   --font-serif: var(--astro-font-serif), Georgia, serif;
   --font-script: var(--astro-font-script), cursive;
   --font-label: var(--astro-font-label), Helvetica, Arial, sans-serif;
@@ -32,6 +45,15 @@
 @layer base {
   html {
     scroll-behavior: smooth;
+    overflow-x: hidden;
+    /* Scrollbar oculta: en navegadores/webviews que reservan un carril ancho (estilo clásico de
+       Windows) ese carril empuja el contenido y se lee como un margen pegado al borde derecho. */
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  html::-webkit-scrollbar {
+    display: none;
   }
 
   body {

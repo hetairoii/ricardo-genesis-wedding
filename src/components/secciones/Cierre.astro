@@ -1,7 +1,8 @@
 ---
 import Section from '../Section.astro';
 import Ornament from '../Ornament.astro';
-import { cierreNote } from '../../data/wedding';
+import PhotoCard from '../contenedores/PhotoCard.astro';
+import { couple, cierreNote } from '../../data/wedding';
 
 const paragraphs = cierreNote.body.split('\n\n');
 ---
@@ -11,6 +12,21 @@ const paragraphs = cierreNote.body.split('\n\n');
 	<Ornament variant="corner-bottom-left" mirror class="opacity-90" />
 
 	<Ornament class="relative mb-8" variant="top" />
+
+	<!--
+		Díptico: dos retratos apenas girados en sentidos opuestos, como dos copias apoyadas
+		una junto a la otra. El giro va en el contenedor y no dentro de PhotoCard para que el
+		componente siga siendo neutro; el desfase vertical de la segunda (sm:mt-8) es lo que
+		evita que el par se lea como una tabla de dos celdas.
+	-->
+	<div class="relative mx-auto mb-12 grid max-w-md grid-cols-2 gap-4 sm:gap-6">
+		<div class="rotate-[-2.5deg]">
+			<PhotoCard alt={`Retrato de ${couple.groomFirstName}`} ratio="portrait" tone="gold" />
+		</div>
+		<div class="rotate-[2.5deg] sm:mt-8">
+			<PhotoCard alt={`Retrato de ${couple.brideFirstName}`} ratio="portrait" tone="gold" />
+		</div>
+	</div>
 
 	<div class="relative mx-auto max-w-[55ch] text-center">
 		<div class="space-y-4">
