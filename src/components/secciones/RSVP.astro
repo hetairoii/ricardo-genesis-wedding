@@ -1,13 +1,18 @@
 ---
 import Section from '../Section.astro';
 import LinkButton from '../LinkButton.astro';
+import ScallopBadge from '../contenedores/ScallopBadge.astro';
+import OrnateFrame from '../contenedores/OrnateFrame.astro';
 import { rsvp } from '../../data/wedding';
 ---
 
 <Section id="confirmacion" background="sky" variant="fade-left" class="relative overflow-hidden py-24">
-	<p class="relative mb-2 text-center font-label text-xl tracking-[0.3em] text-deep uppercase">Confirmación de asistencia</p>
-	<h2 class="relative mt-3 text-center font-serif text-4xl text-ink">Esperamos contar contigo</h2>
-	<p class="relative mx-auto mt-4 max-w-[50ch] text-center font-label text-lg text-deep">
+	<ScallopBadge tone="white" scallops={18} class="relative mx-auto w-72">
+		<p class="font-label text-sm tracking-[0.25em] text-deep uppercase">Confirmación de asistencia</p>
+		<h2 class="mt-2 font-serif text-2xl text-ink">Esperamos contar contigo</h2>
+	</ScallopBadge>
+
+	<p class="relative mx-auto mt-6 max-w-[50ch] text-center font-label text-lg text-deep">
 		Por favor confirma tu asistencia antes del {rsvp.deadlineDisplay}.
 	</p>
 
@@ -20,7 +25,7 @@ import { rsvp } from '../../data/wedding';
 					: undefined;
 
 				return (
-					<div class="flex flex-col items-center gap-3 rounded-sm border border-champagne/40 bg-ivory/60 px-6 py-8 text-center">
+					<OrnateFrame tone="light" ornamentSize="sm" class="flex flex-col items-center gap-3">
 						<p class="font-label text-xs tracking-[0.25em] text-deep uppercase">{contact.role}</p>
 						<p class="font-script text-3xl text-dusty">{contact.name}</p>
 
@@ -38,13 +43,7 @@ import { rsvp } from '../../data/wedding';
 						) : (
 							<p class="mt-2 font-label text-sm text-deep">PENDIENTE: número de contacto</p>
 						)}
-
-						{hasPhone && (
-							<p class="font-label text-sm text-deep">
-								También puedes escribir al <span class="font-bold">+{contact.phone}</span>
-							</p>
-						)}
-					</div>
+					</OrnateFrame>
 				);
 			})
 		}

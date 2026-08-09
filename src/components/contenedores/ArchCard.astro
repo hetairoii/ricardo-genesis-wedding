@@ -1,0 +1,46 @@
+---
+/*
+	Contenedor en forma de arco (medio punto arriba, base recta) -- la pieza clásica de
+	invitación donde va el bloque principal de la fecha o el "tenemos el honor de invitarte".
+
+	El div NO usa overflow-hidden (el arco es solo el fondo de color vía border-radius, no un
+	clip real), así que si el contenido entra en la zona donde la curva ya "comió" el fondo,
+	el texto queda flotando fuera de la tarjeta en vez de dentro -- por eso hay dos resguardos:
+	1) pt generoso, para bajar el contenido más allá de donde la curva se cierra.
+	2) el slot va en un `max-w-[34ch]`, en unidades de caracter (no % del ancho de la tarjeta):
+	   así el ancho del texto no depende de cuán ancha sea la tarjeta -- una tarjeta más ancha
+	   agranda el radio de la curva (más peligro), pero el texto no crece con ella.
+	Esto mantiene el margen de seguridad sin importar el `tone`, el `class` externo, ni cuánto
+	texto le pongan dentro.
+*/
+interface Props {
+	/** 'deep' = fondo azul con texto claro · 'light' = marfil · 'outline' = solo contorno. */
+	tone?: 'deep' | 'light' | 'outline';
+	/** Línea interior paralela al borde, como el filete de las invitaciones clásicas. */
+	innerBorder?: boolean;
+	class?: string;
+}
+
+const { tone = 'deep', innerBorder = true, class: className } = Astro.props;
+
+const tones = {
+	deep: { box: 'bg-deep text-white', line: 'border-white/45' },
+	light: { box: 'bg-ivory text-ink', line: 'border-champagne' },
+	outline: { box: 'border border-champagne bg-white/60 text-ink', line: 'border-champagne/70' },
+}[tone];
+---
+
+<div class:list={['relative rounded-t-full px-8 pt-24 pb-10 text-center sm:px-10 sm:pt-28', tones.box, className]}>
+	{
+		innerBorder && (
+			<div
+				class:list={['pointer-events-none absolute inset-3 rounded-t-full border sm:inset-4', tones.line]}
+				aria-hidden="true"
+			/>
+		)
+	}
+
+	<div class="relative mx-auto max-w-[34ch]">
+		<slot />
+	</div>
+</div>

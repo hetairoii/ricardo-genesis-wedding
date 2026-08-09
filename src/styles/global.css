@@ -24,11 +24,6 @@
   --color-ink: #7c8fa6;
   --color-champagne: #b1c2d4;
 
-  /* Acotados a la portada del sobre (src/components/SobreApertura.astro) -- misma paleta de 5 colores. */
-  --color-sand: #eaeaea;
-  --color-sand-deep: #d0ddf2;
-  --color-wax: #7c8fa6;
-
   --font-serif: var(--astro-font-serif), Georgia, serif;
   --font-script: var(--astro-font-script), cursive;
   --font-label: var(--astro-font-label), Helvetica, Arial, sans-serif;
@@ -117,26 +112,25 @@
     overflow: hidden;
   }
 
-  @keyframes sobre-flap-open {
-    from {
-      transform: rotateX(0deg);
+  /*
+   * El sobre ahora es una foto (wedding-invitation-envelope.png), no un dibujo SVG por capas,
+   * así que ya no se puede animar "la solapa se abre" -- no hay una solapa separada del resto
+   * del sobre. En su lugar: un balanceo suave e infinito mientras espera el toque (para que un
+   * PNG estático no se sienta muerto), y al tocarlo una salida simple (sube y se desvanece).
+   */
+  @keyframes sobre-envelope-float {
+    0%,
+    100% {
+      transform: translateY(0) rotate(0deg);
     }
-    to {
-      transform: rotateX(-165deg);
+    50% {
+      transform: translateY(-8px) rotate(-1deg);
     }
   }
 
-  @keyframes sobre-card-open {
-    0% {
-      transform: translateY(0) scale(1);
-      opacity: 1;
-    }
-    52% {
-      transform: translateY(-100px) scale(1);
-      opacity: 1;
-    }
-    100% {
-      transform: translateY(-100px) scale(5);
+  @keyframes sobre-envelope-open {
+    to {
+      transform: translateY(-36px) scale(1.05);
       opacity: 0;
     }
   }
@@ -150,48 +144,29 @@
     }
   }
 
-  @keyframes sobre-arrow-fade {
-    from {
-      opacity: 1;
-    }
-    to {
-      opacity: 0;
-    }
+  .sobre-envelope-img {
+    animation: sobre-envelope-float 3.2s ease-in-out infinite;
   }
 
-  .sobre-flap-group {
-    transform-box: fill-box;
-    transform-origin: 50% 0%;
-  }
-
-  .is-opening .sobre-flap-group {
-    animation: sobre-flap-open 450ms ease-in forwards;
-  }
-
-  .is-opening .sobre-arrow {
-    animation: sobre-arrow-fade 200ms ease-out forwards;
-  }
-
-  #sobre-card {
-    transform-box: fill-box;
-    transform-origin: 50% 50%;
-  }
-
-  .is-opening #sobre-card {
-    animation: sobre-card-open 1250ms 350ms ease-in-out forwards;
+  .is-opening .sobre-envelope-img {
+    animation: sobre-envelope-open 600ms ease-in forwards;
   }
 
   #sobre-apertura.is-opening {
-    animation: sobre-gate-fade 500ms 1100ms ease-in forwards;
+    animation: sobre-gate-fade 450ms 500ms ease-in forwards;
     pointer-events: none;
   }
 
   /* Debe ir después de las reglas .is-opening para ganar el empate de especificidad. */
   @media (prefers-reduced-motion: reduce) {
-    .is-opening .sobre-flap-group,
-    .is-opening #sobre-card,
-    .is-opening .sobre-arrow {
+    .sobre-envelope-img {
       animation: none;
+    }
+
+    .is-opening .sobre-envelope-img {
+      animation: none;
+      opacity: 0;
+      transition: opacity 200ms ease-out;
     }
 
     #sobre-apertura.is-opening {

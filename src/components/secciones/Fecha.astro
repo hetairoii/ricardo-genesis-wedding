@@ -3,6 +3,7 @@ import { Image } from 'astro:assets';
 import Section from '../Section.astro';
 import Ornament from '../Ornament.astro';
 import HillShape from '../HillShape.astro';
+import PlaqueCard from '../contenedores/PlaqueCard.astro';
 import flowersCentered from '../../assets/flowers-centered.png';
 import ornamentalDividerTop from '../../assets/ornamental-divider-top.png';
 import { weddingDateDisplay } from '../../data/wedding';
@@ -22,29 +23,27 @@ import { weddingDateDisplay } from '../../data/wedding';
 	<Ornament variant="corner-top-right" mirror class="opacity-90" />
 	<Ornament variant="corner-bottom-left" mirror class="opacity-90" />
 
-	<div class="relative text-center">
-		<Image src={ornamentalDividerTop} alt="" class="mx-auto mb-4 h-auto w-40 sm:w-48" />
+	<div class="relative mx-auto max-w-sm">
+		<Image src={ornamentalDividerTop} alt="" class="relative z-10 mx-auto mb-[-1px] h-auto w-40 sm:w-48" />
 
-		<p class="font-label text-sm tracking-[0.4em] text-deep uppercase">{weddingDateDisplay.month}</p>
+		<PlaqueCard tone="deep">
+			<p class="font-label text-sm tracking-[0.4em] uppercase">{weddingDateDisplay.month}</p>
 
-		<div class="mt-6 grid grid-cols-3 items-center gap-2">
-			<p
-				class="justify-self-end border-t border-b border-champagne/60 px-2 py-2 font-label text-sm tracking-[0.25em] text-ink uppercase sm:text-base"
-			>
-				{weddingDateDisplay.weekday}
-			</p>
-			<p class="font-serif text-6xl text-ink sm:text-7xl">{weddingDateDisplay.day}</p>
-			<p
-				class="justify-self-start border-t border-b border-champagne/60 px-2 py-2 font-label text-sm tracking-[0.25em] text-ink uppercase sm:text-base"
-			>
-				{weddingDateDisplay.year}
-			</p>
-		</div>
+			<div class="mt-6 grid grid-cols-3 items-center gap-2">
+				<p class="justify-self-end border-t border-b border-white/40 px-2 py-2 font-label text-sm tracking-[0.25em] uppercase sm:text-base">
+					{weddingDateDisplay.weekday}
+				</p>
+				<p class="font-serif text-6xl sm:text-7xl">{weddingDateDisplay.day}</p>
+				<p class="justify-self-start border-t border-b border-white/40 px-2 py-2 font-label text-sm tracking-[0.25em] uppercase sm:text-base">
+					{weddingDateDisplay.year}
+				</p>
+			</div>
+		</PlaqueCard>
 
 		<Image
 			src={flowersCentered}
 			alt=""
-			class="relative z-10 mx-auto mt-6 w-full max-w-[200px] sm:max-w-[240px]"
+			class="relative z-10 mx-auto -mt-8 w-full max-w-[180px] sm:max-w-[220px]"
 		/>
 	</div>
 
