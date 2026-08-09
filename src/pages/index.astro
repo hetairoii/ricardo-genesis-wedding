@@ -1,4 +1,5 @@
 ---
+import { Image } from 'astro:assets';
 import Base from '../layouts/Base.astro';
 import Hero from '../components/secciones/Hero.astro';
 import Gratitud from '../components/secciones/Gratitud.astro';
@@ -14,6 +15,7 @@ import Footer from '../components/secciones/Footer.astro';
 import FloatingRsvp from '../components/FloatingRsvp.astro';
 import SobreApertura from '../components/SobreApertura.astro';
 import { couple, weddingDateDisplay } from '../data/wedding';
+import weddingLogo from '../assets/wedding-logo-variant-1.png';
 
 const title = `${couple.groomFirstName} & ${couple.brideFirstName} · ${weddingDateDisplay.day} ${weddingDateDisplay.month} ${weddingDateDisplay.year}`;
 const description = `Acompáñanos a celebrar la boda de ${couple.groom} y ${couple.bride} el ${weddingDateDisplay.day} de ${weddingDateDisplay.month} de ${weddingDateDisplay.year}.`;
@@ -37,6 +39,17 @@ const description = `Acompáñanos a celebrar la boda de ${couple.groom} y ${cou
 		<Gratitud />
 		<InvitacionFormal />
 		<Honor />
+
+		<!-- Logo intercalado entre Honor y Fecha: mismo bg-ivory que ambas secciones, así se lee
+		     como parte del mismo fondo continuo y no como un bloque aparte. -->
+		<div class="relative flex justify-center bg-ivory py-8">
+			<Image
+				src={weddingLogo}
+				alt={`Monograma de ${couple.groomFirstName} y ${couple.brideFirstName}`}
+				class="h-28 w-auto sm:h-32"
+			/>
+		</div>
+
 		<Fecha />
 		<Countdown />
 		<FechaLugar />

@@ -1,6 +1,6 @@
 ---
 import Section from './Section.astro';
-import ScallopBadge from './contenedores/ScallopBadge.astro';
+import PlaqueCard from './contenedores/PlaqueCard.astro';
 import { weddingDateISO } from '../data/wedding';
 ---
 
@@ -8,38 +8,38 @@ import { weddingDateISO } from '../data/wedding';
 	<div class="text-center">
 		<p class="font-label text-xl tracking-[0.3em] text-white/90">Prepárate, Solo falta:</p>
 
-		<ScallopBadge tone="ivory" scallops={22} class="mx-auto mt-6 w-full max-w-2xl">
+		<PlaqueCard tone="light" size="lg" class="mx-auto mt-6 w-full max-w-2xl">
 			<div
 				id="countdown-root"
-				class="flex flex-wrap justify-center gap-x-4 py-2"
+				class="flex flex-nowrap items-start justify-center gap-x-2 py-2 sm:gap-x-4"
 				data-wedding-date={weddingDateISO}
 			>
 				<div class="flex flex-col items-center">
-					<span class="font-label text-4xl font-light text-ink sm:text-6xl" data-unit="months" aria-live="polite">--</span>
-					<span class="mt-2 font-label text-xs tracking-[0.2em] text-deep uppercase">Meses</span>
+					<span class="font-label text-2xl font-light text-ink sm:text-6xl" data-unit="months" aria-live="polite">--</span>
+					<span class="mt-2 font-label text-[10px] tracking-[0.15em] text-deep uppercase sm:text-xs sm:tracking-[0.2em]">Meses</span>
 				</div>
 				<div class="flex flex-col items-center">
-					<span class="font-label text-4xl font-light text-ink sm:text-6xl" data-unit="days" aria-live="polite">
+					<span class="font-label text-2xl font-light text-ink sm:text-6xl" data-unit="days" aria-live="polite">
 						--
 					</span>
-					<span class="mt-2 font-label text-xs tracking-[0.2em] text-deep uppercase">Días</span>
+					<span class="mt-2 font-label text-[10px] tracking-[0.15em] text-deep uppercase sm:text-xs sm:tracking-[0.2em]">Días</span>
 				</div>
 				<div class="flex flex-col items-center" aria-hidden="true">
-					<span class="font-label text-4xl font-light text-ink sm:text-6xl" data-unit="hours">--</span>
-					<span class="mt-2 font-label text-xs tracking-[0.2em] text-deep uppercase">Horas</span>
+					<span class="font-label text-2xl font-light text-ink sm:text-6xl" data-unit="hours">--</span>
+					<span class="mt-2 font-label text-[10px] tracking-[0.15em] text-deep uppercase sm:text-xs sm:tracking-[0.2em]">Horas</span>
 				</div>
 				<div class="flex flex-col items-center" aria-hidden="true">
-					<span class="font-label text-4xl font-light text-ink sm:text-6xl" data-unit="minutes">--</span>
-					<span class="mt-2 font-label text-xs tracking-[0.2em] text-deep uppercase">Minutos</span>
+					<span class="font-label text-2xl font-light text-ink sm:text-6xl" data-unit="minutes">--</span>
+					<span class="mt-2 font-label text-[10px] tracking-[0.15em] text-deep uppercase sm:text-xs sm:tracking-[0.2em]">Minutos</span>
 				</div>
 				<div class="flex flex-col items-center" aria-hidden="true">
-					<span class="font-label text-4xl font-light text-ink sm:text-6xl" data-unit="seconds">--</span>
-					<span class="mt-2 font-label text-xs tracking-[0.2em] text-deep uppercase">Segundos</span>
+					<span class="font-label text-2xl font-light text-ink sm:text-6xl" data-unit="seconds">--</span>
+					<span class="mt-2 font-label text-[10px] tracking-[0.15em] text-deep uppercase sm:text-xs sm:tracking-[0.2em]">Segundos</span>
 				</div>
 			</div>
 
 			<p id="countdown-done" class="font-serif text-2xl text-ink" hidden>¡Hoy nos casamos!</p>
-		</ScallopBadge>
+		</PlaqueCard>
 	</div>
 </Section>
 

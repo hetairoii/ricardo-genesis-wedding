@@ -2,7 +2,7 @@
 import Section from '../Section.astro';
 import { Image } from 'astro:assets';
 import Ornament from '../Ornament.astro';
-import ScallopBadge from '../contenedores/ScallopBadge.astro';
+import OrnateFrame from '../contenedores/OrnateFrame.astro';
 import { dressCode } from '../../data/wedding';
 import dressCodeImage from '../../assets/dress-code.png';
 
@@ -18,10 +18,10 @@ const colorSwatches: Record<string, string> = {
 	<Ornament variant="corner-top-right" class="opacity-90" />
 	<Ornament variant="corner-bottom-left" class="opacity-90" />
 
-	<ScallopBadge tone="white" scallops={16} class="relative mx-auto w-64">
+	<OrnateFrame tone="light" ornamentSize="sm" class="relative mx-auto w-64">
 		<p class="font-script text-4xl text-deep">Dress Code</p>
 		<h2 class="mt-1 font-serif text-2xl text-ink italic">{dressCode.label}</h2>
-	</ScallopBadge>
+	</OrnateFrame>
 
 	<div class="relative mx-auto mt-10 max-w-[140px] overflow-hidden rounded-sm border border-champagne/40">
 		<Image

@@ -23,6 +23,10 @@ import { weddingDateDisplay } from '../../data/wedding';
 	<Ornament variant="corner-top-right" mirror class="opacity-90" />
 	<Ornament variant="corner-bottom-left" mirror class="opacity-90" />
 
+	<!-- Logo a caballo entre Honor y Fecha: centrado justo sobre el borde superior de esta
+	     sección (top-0 + -translate-y-1/2), así queda partido a la mitad por la línea donde
+	     una sección termina y la otra empieza, no metido dentro del bloque de la fecha. -->	
+
 	<div class="relative mx-auto max-w-sm sm:max-w-md">
 		<Image src={ornamentalDividerTop} alt="" class="relative z-10 mx-auto mb-[-1px] h-auto w-40 sm:w-48" />
 
