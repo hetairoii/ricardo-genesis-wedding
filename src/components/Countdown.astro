@@ -1,42 +1,45 @@
 ---
 import Section from './Section.astro';
+import ScallopBadge from './contenedores/ScallopBadge.astro';
 import { weddingDateISO } from '../data/wedding';
 ---
 
 <Section id="countdown" background="deep">
-	<div class="text-center p-0">
-		<p class="font-label text-xl tracking-[0.3em] text-white/90 p-0">Prepárate, Solo falta:</p>
+	<div class="text-center">
+		<p class="font-label text-xl tracking-[0.3em] text-white/90">Prepárate, Solo falta:</p>
 
-		<div
-			id="countdown-root"
-			class="mt-6 flex flex-wrap justify-center gap-x-4"
-			data-wedding-date={weddingDateISO}
-		>
-			<div class="flex flex-col items-center">
-				<span class="font-label text-4xl font-light text-white sm:text-6xl" data-unit="months" aria-live="polite">--</span>
-				<span class="mt-2 font-label text-xs tracking-[0.2em] text-white/90 uppercase">Meses</span>
+		<ScallopBadge tone="ivory" scallops={22} class="mx-auto mt-6 w-full max-w-2xl">
+			<div
+				id="countdown-root"
+				class="flex flex-wrap justify-center gap-x-4 py-2"
+				data-wedding-date={weddingDateISO}
+			>
+				<div class="flex flex-col items-center">
+					<span class="font-label text-4xl font-light text-ink sm:text-6xl" data-unit="months" aria-live="polite">--</span>
+					<span class="mt-2 font-label text-xs tracking-[0.2em] text-deep uppercase">Meses</span>
+				</div>
+				<div class="flex flex-col items-center">
+					<span class="font-label text-4xl font-light text-ink sm:text-6xl" data-unit="days" aria-live="polite">
+						--
+					</span>
+					<span class="mt-2 font-label text-xs tracking-[0.2em] text-deep uppercase">Días</span>
+				</div>
+				<div class="flex flex-col items-center" aria-hidden="true">
+					<span class="font-label text-4xl font-light text-ink sm:text-6xl" data-unit="hours">--</span>
+					<span class="mt-2 font-label text-xs tracking-[0.2em] text-deep uppercase">Horas</span>
+				</div>
+				<div class="flex flex-col items-center" aria-hidden="true">
+					<span class="font-label text-4xl font-light text-ink sm:text-6xl" data-unit="minutes">--</span>
+					<span class="mt-2 font-label text-xs tracking-[0.2em] text-deep uppercase">Minutos</span>
+				</div>
+				<div class="flex flex-col items-center" aria-hidden="true">
+					<span class="font-label text-4xl font-light text-ink sm:text-6xl" data-unit="seconds">--</span>
+					<span class="mt-2 font-label text-xs tracking-[0.2em] text-deep uppercase">Segundos</span>
+				</div>
 			</div>
-			<div class="flex flex-col items-center">
-				<span class="font-label text-4xl font-light text-white sm:text-6xl" data-unit="days" aria-live="polite">
-					--
-				</span>
-				<span class="mt-2 font-label text-xs tracking-[0.2em] text-white/90 uppercase">Días</span>
-			</div>
-			<div class="flex flex-col items-center" aria-hidden="true">
-				<span class="font-label text-4xl font-light text-white sm:text-6xl" data-unit="hours">--</span>
-				<span class="mt-2 font-label text-xs tracking-[0.2em] text-white/90 uppercase">Horas</span>
-			</div>
-			<div class="flex flex-col items-center" aria-hidden="true">
-				<span class="font-label text-4xl font-light text-white sm:text-6xl" data-unit="minutes">--</span>
-				<span class="mt-2 font-label text-xs tracking-[0.2em] text-white/90 uppercase">Minutos</span>
-			</div>
-			<div class="flex flex-col items-center" aria-hidden="true">
-				<span class="font-label text-4xl font-light text-white sm:text-6xl" data-unit="seconds">--</span>
-				<span class="mt-2 font-label text-xs tracking-[0.2em] text-white/90 uppercase">Segundos</span>
-			</div>
-		</div>
 
-		<p id="countdown-done" class="mt-6 font-serif text-2xl text-white" hidden>¡Hoy nos casamos!</p>
+			<p id="countdown-done" class="font-serif text-2xl text-ink" hidden>¡Hoy nos casamos!</p>
+		</ScallopBadge>
 	</div>
 </Section>
 

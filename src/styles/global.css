@@ -1,23 +1,28 @@
 @import 'tailwindcss';
 
 /*
- * Tokens de diseño derivados de la paleta de referencia (azul empolvado / marfil).
+ * Paleta cerrada a 5 colores aprobados (no agregar tonos fuera de esta lista):
+ *   Blanco Puro #FFFFFF · Blanco Roto/Marfil #EAEAEA · Azul Cielo Claro #D0DDF2
+ *   · Azul Serenidad #B1C2D4 · Azul Grisáceo Oscuro #7C8FA6.
+ * Los nombres de token heredados (ink, deep, champagne, etc.) se mantienen por
+ * compatibilidad con las clases ya usadas en los componentes, pero cada uno
+ * apunta a uno de los 5 hex de arriba -- no hay colores fuera de esta lista.
  * Tailwind v4 genera utilidades directamente desde este bloque @theme:
  * --color-ivory produce bg-ivory / text-ivory / border-ivory, etc.
- * Contrastes verificados sobre --color-ivory:
- *   ink 10.6:1 (AAA) · deep 6.5:1 (AA todos los tamaños) · dusty 4.4:1 (solo texto >=24px)
- *   · champagne 2.2:1 (solo decorativo, nunca texto).
+ * Aviso de contraste: --color-ink/--color-deep (#7c8fa6, el tono más oscuro
+ * disponible) dan ~3.3:1 sobre blanco/marfil -- por debajo del 4.5:1 AA para
+ * texto normal. Cumple AA solo en texto grande (>=24px o >=18.66px negrita).
  */
 @theme {
-  --color-ivory: #faf7f2;
   --color-white: #ffffff;
-  --color-mist: #e8eaec;
-  --color-sky: #dce3ef;
-  --color-periwinkle: #b7c2da;
-  --color-dusty: #7c8caf;
-  --color-deep: #4a5a7d;
-  --color-ink: #2e3a4f;
-  --color-champagne: #c0a57e;
+  --color-ivory: #eaeaea;
+  --color-mist: #eaeaea;
+  --color-sky: #d0ddf2;
+  --color-periwinkle: #b1c2d4;
+  --color-dusty: #7c8fa6;
+  --color-deep: #7c8fa6;
+  --color-ink: #7c8fa6;
+  --color-champagne: #b1c2d4;
 
   --font-serif: var(--astro-font-serif), Georgia, serif;
   --font-script: var(--astro-font-script), cursive;
@@ -52,15 +57,31 @@
    */
   html.js-reveal-enabled [data-reveal] {
     opacity: 0;
-    transform: translateY(12px);
+    transform: translateY(28px);
   }
 
+  html.js-reveal-enabled [data-reveal][data-reveal-variant='fade-left'] {
+    transform: translateX(-36px);
+  }
+
+  html.js-reveal-enabled [data-reveal][data-reveal-variant='fade-right'] {
+    transform: translateX(36px);
+  }
+
+  html.js-reveal-enabled [data-reveal][data-reveal-variant='scale'] {
+    transform: scale(0.94);
+  }
+
+  /*
+   * Easing tipo "ease-out-expo": arranca rápido y frena con un aterrizaje muy suave --
+   * más elegante que un ease lineal/simétrico para una revelación de una sola vez.
+   */
   html.js-reveal-enabled [data-reveal].reveal-visible {
     opacity: 1;
-    transform: translateY(0);
+    transform: translateY(0) translateX(0) scale(1);
     transition:
-      opacity 350ms cubic-bezier(0.25, 0.46, 0.45, 0.94),
-      transform 350ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      opacity 700ms cubic-bezier(0.16, 1, 0.3, 1),
+      transform 700ms cubic-bezier(0.16, 1, 0.3, 1);
   }
 
   /* Debe ir después de la regla .reveal-visible para ganar el empate de especificidad. */
@@ -91,26 +112,25 @@
     overflow: hidden;
   }
 
-  @keyframes sobre-flap-open {
-    from {
-      transform: rotateX(0deg);
+  /*
+   * El sobre ahora es una foto (wedding-invitation-envelope.png), no un dibujo SVG por capas,
+   * así que ya no se puede animar "la solapa se abre" -- no hay una solapa separada del resto
+   * del sobre. En su lugar: un balanceo suave e infinito mientras espera el toque (para que un
+   * PNG estático no se sienta muerto), y al tocarlo una salida simple (sube y se desvanece).
+   */
+  @keyframes sobre-envelope-float {
+    0%,
+    100% {
+      transform: translateY(0) rotate(0deg);
     }
-    to {
-      transform: rotateX(-165deg);
+    50% {
+      transform: translateY(-8px) rotate(-1deg);
     }
   }
 
-  @keyframes sobre-card-open {
-    0% {
-      transform: translateY(0) scale(1);
-      opacity: 1;
-    }
-    52% {
-      transform: translateY(-100px) scale(1);
-      opacity: 1;
-    }
-    100% {
-      transform: translateY(-100px) scale(5);
+  @keyframes sobre-envelope-open {
+    to {
+      transform: translateY(-36px) scale(1.05);
       opacity: 0;
     }
   }
@@ -124,34 +144,29 @@
     }
   }
 
-  .sobre-flap-group {
-    transform-box: fill-box;
-    transform-origin: 50% 0%;
+  .sobre-envelope-img {
+    animation: sobre-envelope-float 3.2s ease-in-out infinite;
   }
 
-  .is-opening .sobre-flap-group {
-    animation: sobre-flap-open 450ms ease-in forwards;
-  }
-
-  #sobre-card {
-    transform-box: fill-box;
-    transform-origin: 50% 50%;
-  }
-
-  .is-opening #sobre-card {
-    animation: sobre-card-open 1250ms 350ms ease-in-out forwards;
+  .is-opening .sobre-envelope-img {
+    animation: sobre-envelope-open 600ms ease-in forwards;
   }
 
   #sobre-apertura.is-opening {
-    animation: sobre-gate-fade 500ms 1100ms ease-in forwards;
+    animation: sobre-gate-fade 450ms 500ms ease-in forwards;
     pointer-events: none;
   }
 
   /* Debe ir después de las reglas .is-opening para ganar el empate de especificidad. */
   @media (prefers-reduced-motion: reduce) {
-    .is-opening .sobre-flap-group,
-    .is-opening #sobre-card {
+    .sobre-envelope-img {
       animation: none;
+    }
+
+    .is-opening .sobre-envelope-img {
+      animation: none;
+      opacity: 0;
+      transition: opacity 200ms ease-out;
     }
 
     #sobre-apertura.is-opening {

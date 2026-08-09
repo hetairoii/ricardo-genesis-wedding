@@ -1,0 +1,203 @@
+---
+/*
+	Página de REVISIÓN, fuera de la invitación: no está enlazada desde ningún lado y no toca
+	ninguna sección. Sirve para ver los contenedores aislados antes de decidir dónde van.
+	Se puede borrar sin consecuencias cuando ya no haga falta.
+
+	No usa Base.astro a propósito: ese layout inyecta el bloqueo del sobre de apertura
+	(gate-locked), que pone overflow:hidden en el body y dejaría esta página sin scroll.
+*/
+import { Font } from 'astro:assets';
+import '../styles/global.css';
+
+import ArchCard from '../components/contenedores/ArchCard.astro';
+import PlaqueCard from '../components/contenedores/PlaqueCard.astro';
+import ScallopBadge from '../components/contenedores/ScallopBadge.astro';
+import OrnateFrame from '../components/contenedores/OrnateFrame.astro';
+import LabelPill from '../components/contenedores/LabelPill.astro';
+---
+
+<html lang="es">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title>Contenedores · revisión</title>
+		<meta name="robots" content="noindex" />
+		<Font cssVariable="--astro-font-serif" preload />
+		<Font cssVariable="--astro-font-script" preload />
+		<Font cssVariable="--astro-font-label" preload />
+	</head>
+
+	<body class="bg-ivory px-6 py-16">
+		<div class="mx-auto max-w-4xl">
+			<header class="mb-16 text-center">
+				<p class="font-label text-xs tracking-[0.35em] text-deep uppercase">Solo para revisión</p>
+				<h1 class="mt-3 font-serif text-4xl text-ink">Contenedores propuestos</h1>
+				<p class="mx-auto mt-4 max-w-[60ch] font-label text-sm text-deep">
+					Cuatro piezas reutilizables inspiradas en la referencia. Ninguna está colocada todavía en la
+					invitación. Dime cuál quieres y en qué sección.
+				</p>
+			</header>
+
+			<!-- 1 · ARCO -->
+			<section class="mb-20">
+				<p class="mb-2 font-label text-xs tracking-[0.3em] text-deep uppercase">1 · Arco</p>
+				<h2 class="mb-1 font-serif text-2xl text-ink">ArchCard</h2>
+				<p class="mb-8 font-label text-sm text-deep">
+					<code class="text-ink">tone</code>: deep · light · outline &nbsp;|&nbsp;
+					<code class="text-ink">innerBorder</code>: true · false
+				</p>
+
+				<div class="grid gap-8 sm:grid-cols-3">
+					<ArchCard tone="deep">
+						<p class="font-label text-[0.65rem] tracking-[0.25em] uppercase">Tenemos el honor de invitarte a</p>
+						<p class="mt-3 font-script text-3xl">Nuestra Boda</p>
+						<p class="mt-6 font-label text-[0.65rem] tracking-[0.3em] uppercase">Noviembre</p>
+						<div class="mt-3 flex items-center justify-center gap-3">
+							<span class="font-label text-[0.65rem] tracking-[0.2em] uppercase">Sábado</span>
+							<span class="font-serif text-4xl">28</span>
+							<span class="font-label text-[0.65rem] tracking-[0.2em] uppercase">2026</span>
+						</div>
+					</ArchCard>
+
+					<ArchCard tone="light">
+						<p class="font-script text-3xl text-dusty">Faltan</p>
+						<p class="mt-4 font-serif text-5xl">112</p>
+						<p class="mt-2 font-label text-[0.65rem] tracking-[0.3em] uppercase">días</p>
+					</ArchCard>
+
+					<ArchCard tone="outline" innerBorder={false}>
+						<p class="font-label text-[0.65rem] tracking-[0.3em] uppercase">Ceremonia</p>
+						<p class="mt-4 font-serif text-2xl">Grato</p>
+						<p class="font-serif text-2xl">Jardín de Eventos</p>
+						<p class="mt-4 font-label text-[0.65rem] tracking-[0.2em] uppercase">5:00 PM</p>
+					</ArchCard>
+				</div>
+			</section>
+
+			<!-- 2 · FESTÓN -->
+			<section class="mb-20">
+				<p class="mb-2 font-label text-xs tracking-[0.3em] text-deep uppercase">2 · Festón</p>
+				<h2 class="mb-1 font-serif text-2xl text-ink">ScallopBadge</h2>
+				<p class="mb-8 font-label text-sm text-deep">
+					<code class="text-ink">scallops</code>: nº de ondas &nbsp;|&nbsp;
+					<code class="text-ink">tone</code>: sky · ivory · white · deep
+				</p>
+
+				<div class="flex flex-wrap items-center justify-center gap-8">
+					<ScallopBadge tone="sky" scallops={16} class="w-56">
+						<p class="font-script text-3xl">Dress Code</p>
+						<p class="mt-1 font-label text-xs tracking-[0.25em] uppercase">Formal</p>
+					</ScallopBadge>
+
+					<ScallopBadge tone="ivory" scallops={20} class="w-48">
+						<p class="font-script text-3xl text-dusty">Faltan</p>
+						<p class="mt-2 font-serif text-4xl">112</p>
+						<p class="font-label text-[0.65rem] tracking-[0.3em] uppercase">días</p>
+					</ScallopBadge>
+
+					<ScallopBadge tone="deep" scallops={13} class="w-44">
+						<p class="font-label text-[0.65rem] tracking-[0.3em] uppercase">Hemos reservado</p>
+						<p class="mt-1 font-serif text-4xl">2</p>
+						<p class="font-label text-[0.65rem] tracking-[0.25em] uppercase">lugares</p>
+					</ScallopBadge>
+				</div>
+			</section>
+
+			<!-- 3 · MARCO -->
+			<section class="mb-20">
+				<p class="mb-2 font-label text-xs tracking-[0.3em] text-deep uppercase">3 · Marco</p>
+				<h2 class="mb-1 font-serif text-2xl text-ink">OrnateFrame</h2>
+				<p class="mb-8 font-label text-sm text-deep">
+					<code class="text-ink">tone</code>: light · ivory · deep &nbsp;|&nbsp;
+					<code class="text-ink">ornamentSize</code>: sm · md · lg
+				</p>
+
+				<div class="grid gap-8 sm:grid-cols-2">
+					<OrnateFrame tone="light">
+						<p class="font-script text-3xl text-dusty">Regalos</p>
+						<p class="mx-auto mt-4 max-w-[34ch] font-label text-sm leading-relaxed text-deep">
+							Su compañía es lo más importante. Si desean hacernos un obsequio, lo recibiremos con
+							mucho cariño.
+						</p>
+					</OrnateFrame>
+
+					<OrnateFrame tone="deep" ornamentSize="lg">
+						<p class="font-script text-3xl">Confirmar asistencia</p>
+						<p class="mx-auto mt-4 max-w-[34ch] font-label text-sm leading-relaxed text-white/80">
+							Háznos saber si podremos contar contigo en este día tan especial.
+						</p>
+					</OrnateFrame>
+				</div>
+			</section>
+
+			<!-- 5 · PLACA -->
+			<section class="mb-20">
+				<p class="mb-2 font-label text-xs tracking-[0.3em] text-deep uppercase">5 · Placa</p>
+				<h2 class="mb-1 font-serif text-2xl text-ink">PlaqueCard</h2>
+				<p class="mb-8 font-label text-sm text-deep">
+					<code class="text-ink">tone</code>: deep · light · sky · outline &nbsp;|&nbsp;
+					<code class="text-ink">corners</code>: all · top &nbsp;|&nbsp;
+					<code class="text-ink">size</code>: sm · md · lg &nbsp;|&nbsp;
+					<code class="text-ink">innerBorder</code>
+				</p>
+
+				<div class="grid gap-8 sm:grid-cols-3">
+					<PlaqueCard tone="deep">
+						<p class="font-label text-[0.6rem] leading-relaxed tracking-[0.25em] uppercase">
+							Tenemos el honor<br />de invitarte a
+						</p>
+						<p class="mt-4 font-script text-4xl">Nuestra Boda</p>
+						<p class="mt-6 font-label text-[0.6rem] tracking-[0.3em] uppercase">Noviembre</p>
+						<div class="mt-3 flex items-center justify-center gap-4">
+							<span class="border-t border-b border-white/40 px-2 py-1 font-label text-[0.6rem] tracking-[0.2em] uppercase">
+								Sábado
+							</span>
+							<span class="font-serif text-5xl">28</span>
+							<span class="border-t border-b border-white/40 px-2 py-1 font-label text-[0.6rem] tracking-[0.2em] uppercase">
+								2026
+							</span>
+						</div>
+						<p class="mt-6 font-label text-[0.6rem] tracking-[0.2em] uppercase">Barquisimeto, Venezuela</p>
+					</PlaqueCard>
+
+					<PlaqueCard tone="light" size="lg">
+						<p class="font-script text-3xl text-dusty">Regalos</p>
+						<p class="mx-auto mt-4 max-w-[26ch] font-label text-sm leading-relaxed text-deep">
+							Su compañía es lo más importante para nosotros.
+						</p>
+					</PlaqueCard>
+
+					<PlaqueCard tone="outline" corners="top" size="sm">
+						<p class="font-label text-[0.6rem] tracking-[0.3em] uppercase">Ceremonia</p>
+						<p class="mt-4 font-serif text-2xl">Grato</p>
+						<p class="font-serif text-2xl">Jardín de Eventos</p>
+						<p class="mt-4 font-label text-[0.6rem] tracking-[0.2em] uppercase">5:00 PM</p>
+					</PlaqueCard>
+				</div>
+			</section>
+
+			<!-- 4 · PÍLDORA -->
+			<section class="mb-16">
+				<p class="mb-2 font-label text-xs tracking-[0.3em] text-deep uppercase">4 · Píldora</p>
+				<h2 class="mb-1 font-serif text-2xl text-ink">LabelPill</h2>
+				<p class="mb-8 font-label text-sm text-deep">
+					<code class="text-ink">shape</code>: soft · pill &nbsp;|&nbsp;
+					<code class="text-ink">tone</code>: outline · solid · light
+				</p>
+
+				<div class="flex flex-wrap items-center gap-4">
+					<LabelPill>Hora: 5:00 PM</LabelPill>
+					<LabelPill shape="pill">Av. San Silvestre</LabelPill>
+					<LabelPill tone="solid">Formal / Elegante</LabelPill>
+					<LabelPill tone="solid" shape="pill">28 · 11 · 2026</LabelPill>
+				</div>
+
+				<div class="mt-6 inline-flex flex-wrap items-center gap-4 bg-deep px-6 py-5">
+					<LabelPill tone="light">Sobre fondo azul</LabelPill>
+					<LabelPill tone="light" shape="pill">Hora: 19:00</LabelPill>
+				</div>
+			</section>
+		</div>
+	</body>
+</html>

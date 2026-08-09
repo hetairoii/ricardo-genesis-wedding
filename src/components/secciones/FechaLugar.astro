@@ -1,61 +1,49 @@
 ---
+import { Image } from 'astro:assets';
 import Section from '../Section.astro';
 import Ornament from '../Ornament.astro';
 import LinkButton from '../LinkButton.astro';
-import { couple, weddingDateISO, weddingDateDisplay, venue, eventDurationHours } from '../../data/wedding';
-import { buildGoogleCalendarUrl, buildIcsDataUri } from '../../lib/calendar';
-
-const start = new Date(weddingDateISO);
-const end = new Date(start.getTime() + eventDurationHours * 60 * 60 * 1000);
-
-const eventTitle = `Boda de ${couple.groomFirstName} y ${couple.brideFirstName}`;
-const eventDescription = `Acompáñanos a celebrar la boda de ${couple.groom} y ${couple.bride}.`;
-const location = venue.addressLine === 'PENDIENTE' ? venue.name : `${venue.name}, ${venue.addressLine}`;
-
-const calendarEvent = { title: eventTitle, description: eventDescription, location, start, end };
-const googleCalendarUrl = buildGoogleCalendarUrl(calendarEvent);
-const icsHref = buildIcsDataUri(calendarEvent, `boda-${couple.groomFirstName}-${couple.brideFirstName}-${start.getTime()}@ricardo-genesis-wedding`);
-const icsFilename = `Boda-${couple.groomFirstName}-${couple.brideFirstName}.ics`;
+import weddingArch from '../../assets/wedding-arch.png';
+import { weddingDateDisplay, venue } from '../../data/wedding';
 
 const hasMapsUrl = venue.mapsUrl !== 'PENDIENTE';
+const [venueFirstWord, ...venueRestWords] = venue.name.split(' ');
+const venueRest = venueRestWords.join(' ');
 ---
 
-<Section id="fecha-lugar" background="white">
-	<div class="mb-12 text-center" aria-hidden="true">
-		<p class="font-script text-5xl text-champagne md:text-6xl">R&amp;G</p>
-		<Ornament class="mt-4" />
+<Section id="fecha-lugar" background="white" variant="fade-left" class="relative overflow-hidden">
+	<Ornament variant="corner-top-right" mirror class="opacity-90" />
+	<Ornament variant="corner-bottom-left" mirror class="opacity-90" />
+
+	<div class="relative text-center" aria-hidden="true">
+		<Image src={weddingArch} alt="" class="mx-auto h-28 w-auto md:h-32" />
+		<Ornament class="mt-4" variant="top" />
 	</div>
 
-	<div class="grid gap-14">
-		<div class="text-center sm:text-left">
-			<p class="font-label text-xl tracking-[0.3em] text-deep uppercase">Fecha</p>
-			<p class="mt-4 font-serif text-2xl text-ink">{weddingDateDisplay.weekday}</p>
-			<p class="font-serif text-4xl text-dusty sm:text-5xl">{weddingDateDisplay.day} de {weddingDateDisplay.month}</p>
-			<p class="font-serif text-2xl text-ink">{weddingDateDisplay.year}</p>
-			<Ornament class="my-6 sm:justify-start" />
-			<p class="font-label text-xl tracking-[0.2em] text-deep uppercase">
-				{weddingDateDisplay.time} {weddingDateDisplay.timezone}
-			</p>
-		</div>
+	<div class="relative mt-12 text-center">
+		<p class="font-label text-xl tracking-[0.3em] text-deep uppercase">Ceremonia y festejo</p>
+		<p class="mt-4 font-serif text-4xl text-ink">
+			{venueFirstWord}
+			{venueRest && (
+				<>
+					<br />
+					{venueRest}
+				</>
+			)}
+		</p>
+		<p class="mt-2 font-label text-xl text-deep">{venue.addressLine}</p>
+		<p class="mt-2 font-label text-xl tracking-[0.2em] text-deep uppercase">
+			{weddingDateDisplay.time} {weddingDateDisplay.timezone}
+		</p>
 
-		<div class="text-center sm:text-left">
-			<p class="font-label text-xl tracking-[0.3em] text-deep uppercase">Lugar</p>
-			<p class="mt-4 font-serif text-4xl text-ink">{venue.name}</p>
-			<p class="mt-2 font-label text-xl text-deep">{venue.addressLine}</p>
-
-			<div class="mt-8 flex flex-col items-center gap-3 sm:items-start">
-				{
-					hasMapsUrl && (
-						<LinkButton href={venue.mapsUrl} external>
-							Cómo llegar
-						</LinkButton>
-					)
-				}
-				<div class="flex flex-col gap-3">
-					<LinkButton href={googleCalendarUrl} external>Google Calendar</LinkButton>
-					<LinkButton href={icsHref} download={icsFilename}>Añadir al calendario</LinkButton>
+		{
+			hasMapsUrl && (
+				<div class="mt-8 flex justify-center">
+					<LinkButton href={venue.mapsUrl} external>
+						Cómo llegar
+					</LinkButton>
 				</div>
-			</div>
-		</div>
+			)
+		}
 	</div>
 </Section>

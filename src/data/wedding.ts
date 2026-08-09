@@ -14,8 +14,8 @@ export const couple = {
 
 /** Opcional: dejar los arreglos vacíos si no se desea mostrar a los padres en la invitación. */
 export const parents = {
-  groom: ['Jose marquez', 'Maria zambrano'] as string[], // ej. ['Juan Márquez', 'María Pérez de Márquez']
-  bride: ['Marcos Caldera', 'Amadora Carballo'] as string[],
+  groom: ['José Eliazar Márquez ', 'María Josefa Zambrano'] as string[], // ej. ['Juan Márquez', 'María Pérez de Márquez']
+  bride: ['Marcos Sergio Caldera Delgado', 'Amadora del Carmen Carballo Frías'] as string[],
 };
 
 /** Sección "Gratitud", entre el Hero y la Invitación formal. `highlight` se destaca tipográficamente. */
@@ -54,7 +54,7 @@ export const weddingDateDisplay = {
 };
 
 export const venue = {
-  name: 'Grato jardín',
+  name: 'Grato Jardín de Eventos',
   addressLine: 'Av. San Silvestre',
   city: 'Barinas',
   mapsUrl: 'https://maps.app.goo.gl/ZHxaoDKPV9Jt923s6?g_st=ic',
@@ -62,40 +62,32 @@ export const venue = {
 
 export const dressCode = {
   label: 'Formal / Elegante',
-  note: 'Los novios reservan para sí los colores indicados abajo. Se agradece a los invitados asistir en un color diferente a estos.',
+  note: 'Nos reservamos los colores',
   reservedColors: ['Blanco', 'Gris', 'Celeste'],
 };
 
-export const adultsOnlyNote =
-  'Con todo el cariño, hemos reservado esta celebración para nuestros invitados adultos. Agradecemos de corazón su comprensión.';
-
-export type ProgramItem = {
-  time: string;
-  title: string;
-  description?: string;
-};
-
-export const program: ProgramItem[] = [
-  { time: '5:00 PM', title: 'Ceremonia', description: 'PENDIENTE: lugar de la ceremonia' },
-  { time: '6:00 PM', title: 'Cóctel de bienvenida' },
-  { time: '7:00 PM', title: 'Recepción y cena' },
-  { time: '8:30 PM', title: 'Primer baile' },
-  { time: '9:00 PM', title: 'Fiesta' },
-];
-
 export type RsvpContact = {
+  id: 'groom' | 'bride'; // ancla estable para src/scripts/guest-params.ts, no derivar de `role`
   name: string;
   role: string;
   phone: string; // formato internacional sin signos, ej. "584121234567", o "PENDIENTE"
 };
 
+/**
+ * Personalización por invitado (opcional, vía parámetros de URL, ver src/scripts/guest-params.ts):
+ *   https://sitio.com/?invitado=Familia+Perez&pases=2
+ * Con ambos parámetros válidos (`pases` entero entre 1 y 20), el sobre muestra "Hemos
+ * reservado N lugares en su honor" y el botón de WhatsApp arma el mensaje con esos datos.
+ * Sin ellos, o si alguno es inválido, todo usa el mensaje genérico de abajo -- ningún
+ * enlace sin personalizar se rompe por esto. Los enlaces se arman a mano por cada familia.
+ */
 export const rsvp = {
   deadlineDisplay: '08 de Noviembre de 2026', // ej. "15 de octubre de 2026"
   message:
     'Hola! Confirmo mi asistencia a la boda de Ricardo y Genesis. Somos [nombre / número de personas]: ',
   contacts: [
-    { name: couple.groomFirstName, role: 'Novio', phone: '584245937048' },
-    { name: couple.brideFirstName, role: 'Novia', phone: '584245178795' },
+    { id: 'groom', name: couple.groomFirstName, role: 'Novio', phone: '584245937048' },
+    { id: 'bride', name: couple.brideFirstName, role: 'Novia', phone: '584245178795' },
   ] as RsvpContact[],
 };
 

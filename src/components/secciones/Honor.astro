@@ -1,23 +1,33 @@
 ---
+import { Image } from 'astro:assets';
 import Section from '../Section.astro';
 import Ornament from '../Ornament.astro';
+import ArchCard from '../contenedores/ArchCard.astro';
+import weddingWaxSeal from '../../assets/wedding-wax-seal.png';
 import { honorNote } from '../../data/wedding';
 ---
 
-<Section id="honor" background="ivory">
-	<Ornament class="mb-8" />
+<Section id="honor" background="ivory" variant="fade-right" class="relative overflow-hidden">
+	<Ornament variant="lateral-left" class="opacity-80" />
+	<Ornament variant="lateral-right" class="opacity-80" />
 
-	<div class="mx-auto max-w-[55ch] text-center">
-		<p class="font-serif text-xl leading-relaxed text-ink italic md:text-2xl">
-			{honorNote.intro}
-		</p>
-		<p class="mt-6 font-serif text-2xl text-dusty md:text-4xl">
-			{honorNote.title}
-		</p>
-		<p class="mt-6 font-serif text-xl leading-relaxed text-ink italic md:text-2xl">
-			{honorNote.closing}
-		</p>
+	<div class="relative mx-auto max-w-md text-center">
+		<Image
+			src={weddingWaxSeal}
+			alt=""
+			class="relative z-10 mx-auto -mb-8 h-auto w-16 drop-shadow-md sm:w-20"
+		/>
+
+		<ArchCard tone="outline">
+			<p class="font-serif text-lg leading-relaxed text-ink italic md:text-xl">
+				{honorNote.intro}
+			</p>
+			<p class="mt-5 font-serif text-2xl text-dusty md:text-3xl">
+				{honorNote.title}
+			</p>
+			<p class="mt-5 font-serif text-lg leading-relaxed text-ink italic md:text-xl">
+				{honorNote.closing}
+			</p>
+		</ArchCard>
 	</div>
-
-	<Ornament class="mt-8" />
 </Section>

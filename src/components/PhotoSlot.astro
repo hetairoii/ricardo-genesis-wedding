@@ -1,6 +1,7 @@
 ---
 import { Image } from 'astro:assets';
 import type { ImageMetadata } from 'astro';
+import weddingLogo from '../assets/wedding-logo.png';
 
 interface Props {
 	/** Cuando llegue la foto real, pasar aquí el resultado de un `import ... from '...jpg'`. */
@@ -35,7 +36,7 @@ const ratioClass = {
 			/>
 		) : (
 			<div class="photo-slot-placeholder h-full w-full" role="presentation" aria-hidden="true">
-				<span class="photo-slot-monogram font-script text-champagne">R&amp;G</span>
+				<Image src={weddingLogo} alt="" class="photo-slot-monogram" />
 			</div>
 		)
 	}
@@ -63,7 +64,8 @@ const ratioClass = {
 
 	.photo-slot-monogram {
 		position: relative;
-		font-size: clamp(2rem, 6vw, 3.5rem);
+		width: clamp(5rem, 24vw, 9rem);
+		height: auto;
 		opacity: 0.55;
 	}
 </style>

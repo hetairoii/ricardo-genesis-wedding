@@ -1,0 +1,79 @@
+---
+/*
+	Placa con esquinas biseladas (octógono alargado) y filete interior -- el bloque principal
+	"Tenemos el honor de invitarte a / Nuestra Boda".
+
+	La forma se hace con clip-path y NO con border-radius: el bisel es un corte recto a 45°,
+	no una curva. Ojo: clip-path recorta también el borde CSS, así que un `border` normal
+	desaparecería justo en las diagonales. Por eso tanto el contorno como el filete interior
+	se construyen apilando dos capas recortadas -- una del color de la línea y encima otra del
+	color de relleno desplazada 1px, que deja ver el hilo de la de abajo por todo el perímetro.
+
+	El bisel va en px fijos (no en %) para que se vea igual sin importar cuánto texto tenga
+	dentro; un bisel porcentual se deformaría al crecer la caja.
+*/
+interface Props {
+	tone?: 'deep' | 'light' | 'sky' | 'outline';
+	/** 'all' = las cuatro esquinas biseladas · 'top' = solo las de arriba, base recta. */
+	corners?: 'all' | 'top';
+	/** Tamaño del bisel. */
+	size?: 'sm' | 'md' | 'lg';
+	innerBorder?: boolean;
+	class?: string;
+}
+
+const { tone = 'deep', corners = 'all', size = 'md', innerBorder = true, class: className } = Astro.props;
+
+const tones = {
+	deep: { box: 'bg-deep text-white', line: 'bg-white/45', fill: 'bg-deep' },
+	light: { box: 'bg-ivory text-ink', line: 'bg-champagne', fill: 'bg-ivory' },
+	sky: { box: 'bg-sky text-ink', line: 'bg-white/70', fill: 'bg-sky' },
+	outline: { box: 'bg-champagne text-ink', line: 'bg-champagne', fill: 'bg-white' },
+}[tone];
+
+const chamfer = { sm: 14, md: 22, lg: 32 }[size];
+const inset = 12;
+
+/*
+	Al meter el contorno hacia dentro una distancia I, la diagonal se desplaza en perpendicular
+	y el bisel se acorta I*(2 - raíz(2)) sobre cada eje. Sin esta corrección el filete interior
+	no quedaría paralelo al borde en las esquinas, que es donde más se nota.
+*/
+const innerChamfer = Math.max(4, Number((chamfer - inset * (2 - Math.SQRT2)).toFixed(2)));
+
+const clip = (c: number) =>
+	corners === 'all'
+		? `polygon(${c}px 0, calc(100% - ${c}px) 0, 100% ${c}px, 100% calc(100% - ${c}px), calc(100% - ${c}px) 100%, ${c}px 100%, 0 calc(100% - ${c}px), 0 ${c}px)`
+		: `polygon(${c}px 0, calc(100% - ${c}px) 0, 100% ${c}px, 100% 100%, 0 100%, 0 ${c}px)`;
+
+const clipOuter = clip(chamfer);
+const clipInner = clip(innerChamfer);
+---
+
+<div
+	class:list={['relative px-8 py-10 text-center sm:px-10 sm:py-12', tones.box, className]}
+	style={`clip-path: ${clipOuter}`}
+>
+	{/* tone="outline": deja ver solo 1px del color de abajo, que hace de contorno. */}
+	{
+		tone === 'outline' && (
+			<div class:list={['absolute inset-px', tones.fill]} style={`clip-path: ${clipOuter}`} aria-hidden="true" />
+		)
+	}
+
+	{
+		innerBorder && (
+			<div
+				class:list={['pointer-events-none absolute', tones.line]}
+				style={`inset: ${inset}px; clip-path: ${clipInner}`}
+				aria-hidden="true"
+			>
+				<div class:list={['absolute inset-px', tones.fill]} style={`clip-path: ${clipInner}`} />
+			</div>
+		)
+	}
+
+	<div class="relative">
+		<slot />
+	</div>
+</div>

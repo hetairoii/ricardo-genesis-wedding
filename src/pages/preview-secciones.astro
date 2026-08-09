@@ -1,0 +1,240 @@
+---
+/*
+	Página de REVISIÓN, fuera de la invitación: no está enlazada desde ningún lado y no toca
+	ninguna sección real. Reconstruye Fecha/Honor/Countdown/DressCode/RSVP con los contenedores
+	de src/components/contenedores/, usando el contenido REAL de src/data/wedding.ts (no texto
+	de ejemplo), para que se vea exactamente como quedaría en vivo antes de tocar
+	src/components/secciones/*.astro o src/pages/index.astro.
+
+	No usa Base.astro a propósito: ese layout inyecta el bloqueo del sobre de apertura
+	(gate-locked), que pone overflow:hidden en el body y dejaría esta página sin scroll.
+*/
+import { Font, Image } from 'astro:assets';
+import '../styles/global.css';
+
+import Section from '../components/Section.astro';
+import Ornament from '../components/Ornament.astro';
+import HillShape from '../components/HillShape.astro';
+import LinkButton from '../components/LinkButton.astro';
+
+import ArchCard from '../components/contenedores/ArchCard.astro';
+import PlaqueCard from '../components/contenedores/PlaqueCard.astro';
+import ScallopBadge from '../components/contenedores/ScallopBadge.astro';
+import OrnateFrame from '../components/contenedores/OrnateFrame.astro';
+
+import flowersCentered from '../assets/flowers-centered.png';
+import ornamentalDividerTop from '../assets/ornamental-divider-top.png';
+import dressCodeImage from '../assets/dress-code.png';
+import weddingWaxSeal from '../assets/wedding-wax-seal.png';
+
+import { weddingDateDisplay, weddingDateISO, honorNote, dressCode, rsvp } from '../data/wedding';
+
+const colorSwatches: Record<string, string> = {
+	Blanco: '#ffffff',
+	Gris: '#b3b3b3',
+	Celeste: '#a7c7e7',
+};
+---
+
+<html lang="es">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title>Secciones restyleadas · revisión</title>
+		<meta name="robots" content="noindex" />
+		<Font cssVariable="--astro-font-serif" preload />
+		<Font cssVariable="--astro-font-script" preload />
+		<Font cssVariable="--astro-font-label" preload />
+	</head>
+
+	<body>
+		<header class="bg-white px-6 py-12 text-center">
+			<p class="font-label text-xs tracking-[0.35em] text-deep uppercase">Solo para revisión</p>
+			<h1 class="mt-3 font-serif text-4xl text-ink">Secciones con contenedores</h1>
+			<p class="mx-auto mt-4 max-w-[60ch] font-label text-sm text-deep">
+				Fecha, Honor, Countdown, DressCode y RSVP con el contenido real de la invitación, envueltos en
+				los contenedores nuevos. El resto de secciones no cambia. Nada de esto está conectado a la
+				página real todavía.
+			</p>
+		</header>
+
+		<!-- FECHA · PlaqueCard tone="deep" -->
+		<p class="bg-ivory px-6 pt-8 text-center font-label text-xs tracking-[0.3em] text-deep uppercase">Fecha</p>
+		<Section id="fecha" background="ivory" class="relative overflow-hidden !pt-4">
+			<Ornament variant="lateral-left" class="opacity-90" />
+			<Ornament variant="lateral-right" class="opacity-90" />
+			<Ornament variant="corner-top-right" class="opacity-90" />
+			<Ornament variant="corner-bottom-left" class="opacity-90" />
+			<Ornament variant="corner-top-right" mirror class="opacity-90" />
+			<Ornament variant="corner-bottom-left" mirror class="opacity-90" />
+
+			<div class="relative mx-auto max-w-sm">
+				<Image src={ornamentalDividerTop} alt="" class="relative z-10 mx-auto mb-[-1px] h-auto w-40 sm:w-48" />
+
+				<PlaqueCard tone="deep">
+					<p class="font-label text-sm tracking-[0.4em] uppercase">{weddingDateDisplay.month}</p>
+
+					<div class="mt-6 grid grid-cols-3 items-center gap-2">
+						<p class="justify-self-end border-t border-b border-white/40 px-2 py-2 font-label text-sm tracking-[0.25em] uppercase sm:text-base">
+							{weddingDateDisplay.weekday}
+						</p>
+						<p class="font-serif text-6xl sm:text-7xl">{weddingDateDisplay.day}</p>
+						<p class="justify-self-start border-t border-b border-white/40 px-2 py-2 font-label text-sm tracking-[0.25em] uppercase sm:text-base">
+							{weddingDateDisplay.year}
+						</p>
+					</div>
+				</PlaqueCard>
+
+				<Image
+					src={flowersCentered}
+					alt=""
+					class="relative z-10 mx-auto -mt-8 w-full max-w-[180px] sm:max-w-[220px]"
+				/>
+			</div>
+
+			<HillShape class="pointer-events-none absolute inset-x-0 bottom-0 h-48 w-full sm:h-64" />
+		</Section>
+
+		<!-- HONOR · ArchCard tone="outline" -->
+		<p class="bg-ivory px-6 pt-8 text-center font-label text-xs tracking-[0.3em] text-deep uppercase">Honor</p>
+		<Section id="honor" background="ivory" class="relative overflow-hidden !pt-4">
+			<Ornament variant="lateral-left" class="opacity-80" />
+			<Ornament variant="lateral-right" class="opacity-80" />
+
+			<div class="relative mx-auto max-w-md text-center">
+				<Image
+					src={weddingWaxSeal}
+					alt=""
+					class="relative z-10 mx-auto -mb-8 h-auto w-16 drop-shadow-md sm:w-20"
+				/>
+
+				<ArchCard tone="outline">
+						<p class="font-serif text-lg leading-relaxed text-ink italic md:text-xl">
+							{honorNote.intro}
+						</p>
+						<p class="mt-5 font-serif text-2xl text-dusty md:text-3xl">
+							{honorNote.title}
+						</p>
+						<p class="mt-5 font-serif text-lg leading-relaxed text-ink italic md:text-xl">
+							{honorNote.closing}
+						</p>
+					</ArchCard>
+				</div>
+			</Section>
+
+		<!-- COUNTDOWN · ScallopBadge tone="ivory" -->
+		<p class="bg-deep px-6 pt-8 text-center font-label text-xs tracking-[0.3em] text-white/80 uppercase">
+			Countdown
+		</p>
+		<Section id="countdown" background="deep" class="!pt-4">
+			<div class="text-center">
+				<p class="font-label text-xl tracking-[0.3em] text-white/90">Prepárate, Solo falta:</p>
+
+				<ScallopBadge tone="ivory" scallops={22} class="mx-auto mt-6 w-full max-w-2xl">
+					<div id="countdown-root" class="flex flex-wrap justify-center gap-x-4 py-2" data-wedding-date={weddingDateISO}>
+						<div class="flex flex-col items-center">
+							<span class="font-label text-4xl font-light text-ink sm:text-6xl" data-unit="months" aria-live="polite">--</span>
+							<span class="mt-2 font-label text-xs tracking-[0.2em] text-deep uppercase">Meses</span>
+						</div>
+						<div class="flex flex-col items-center">
+							<span class="font-label text-4xl font-light text-ink sm:text-6xl" data-unit="days" aria-live="polite">--</span>
+							<span class="mt-2 font-label text-xs tracking-[0.2em] text-deep uppercase">Días</span>
+						</div>
+						<div class="flex flex-col items-center" aria-hidden="true">
+							<span class="font-label text-4xl font-light text-ink sm:text-6xl" data-unit="hours">--</span>
+							<span class="mt-2 font-label text-xs tracking-[0.2em] text-deep uppercase">Horas</span>
+						</div>
+						<div class="flex flex-col items-center" aria-hidden="true">
+							<span class="font-label text-4xl font-light text-ink sm:text-6xl" data-unit="minutes">--</span>
+							<span class="mt-2 font-label text-xs tracking-[0.2em] text-deep uppercase">Minutos</span>
+						</div>
+						<div class="flex flex-col items-center" aria-hidden="true">
+							<span class="font-label text-4xl font-light text-ink sm:text-6xl" data-unit="seconds">--</span>
+							<span class="mt-2 font-label text-xs tracking-[0.2em] text-deep uppercase">Segundos</span>
+						</div>
+					</div>
+					<p id="countdown-done" class="font-serif text-2xl text-ink" hidden>¡Hoy nos casamos!</p>
+				</ScallopBadge>
+			</div>
+		</Section>
+		<script>
+			import '../scripts/countdown.ts';
+		</script>
+
+		<!-- DRESS CODE · ScallopBadge tone="white" -->
+		<p class="bg-sky px-6 pt-8 text-center font-label text-xs tracking-[0.3em] text-deep uppercase">Dress code</p>
+		<Section id="dress-code" background="sky" class="relative overflow-hidden !pt-4">
+			<Ornament variant="corner-top-right" class="opacity-90" />
+			<Ornament variant="corner-bottom-left" class="opacity-90" />
+
+			<ScallopBadge tone="white" scallops={16} class="relative mx-auto w-64">
+				<p class="font-script text-4xl text-deep">Dress Code</p>
+				<h2 class="mt-1 font-serif text-2xl text-ink">{dressCode.label}</h2>
+			</ScallopBadge>
+
+			<div class="relative mx-auto mt-10 max-w-[140px] overflow-hidden rounded-sm border border-champagne/40">
+				<Image
+					src={dressCodeImage}
+					alt="Referencia de vestimenta formal esperada para la boda: traje oscuro para caballeros y vestido largo elegante para damas"
+					class="h-auto w-full"
+					widths={[140, 330, 440]}
+					sizes="140px"
+				/>
+			</div>
+
+			<p class="relative mx-auto mt-8 max-w-[50ch] text-center font-label text-sm text-deep">{dressCode.note}</p>
+			<div class="relative mt-4 flex justify-center gap-8">
+				{
+					dressCode.reservedColors.map((color) => (
+						<div class="flex flex-col items-center gap-2">
+							<span
+								class="h-9 w-9 rounded-full border border-ink/20"
+								style={`background-color: ${colorSwatches[color] ?? 'transparent'}`}
+							/>
+							<span class="font-label text-sm tracking-[0.2em] text-ink uppercase">{color}</span>
+						</div>
+					))
+				}
+			</div>
+		</Section>
+
+		<!-- RSVP · ScallopBadge (encabezado) + OrnateFrame (tarjetas de contacto) -->
+		<p class="bg-sky px-6 pt-8 text-center font-label text-xs tracking-[0.3em] text-deep uppercase">RSVP</p>
+		<Section id="confirmacion" background="sky" class="relative overflow-hidden !pt-4 !pb-24">
+			<ScallopBadge tone="white" scallops={18} class="relative mx-auto w-72">
+				<p class="font-label text-sm tracking-[0.25em] text-deep uppercase">Confirmación de asistencia</p>
+				<h2 class="mt-2 font-serif text-2xl text-ink">Esperamos contar contigo</h2>
+			</ScallopBadge>
+
+			<p class="relative mx-auto mt-6 max-w-[50ch] text-center font-label text-lg text-deep">
+				Por favor confirma tu asistencia antes del {rsvp.deadlineDisplay}.
+			</p>
+
+			<div class="relative mx-auto mt-10 grid max-w-2xl gap-8 sm:grid-cols-2">
+				{
+					rsvp.contacts.map((contact) => {
+						const hasPhone = contact.phone !== 'PENDIENTE';
+						const waHref = hasPhone
+							? `https://wa.me/${contact.phone}?text=${encodeURIComponent(rsvp.message)}`
+							: undefined;
+
+						return (
+							<OrnateFrame tone="light" ornamentSize="sm" class="flex flex-col items-center gap-3">
+								<p class="font-label text-xs tracking-[0.25em] text-deep uppercase">{contact.role}</p>
+								<p class="font-script text-3xl text-dusty">{contact.name}</p>
+
+								{hasPhone ? (
+									<LinkButton href={waHref!} external variant="solid" width="full" class="mt-2 text-nowrap">
+										Confirmar por WhatsApp
+									</LinkButton>
+								) : (
+									<p class="mt-2 font-label text-sm text-deep">PENDIENTE: número de contacto</p>
+								)}
+							</OrnateFrame>
+						);
+					})
+				}
+			</div>
+		</Section>
+	</body>
+</html>

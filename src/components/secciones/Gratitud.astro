@@ -1,16 +1,25 @@
 ---
+import { Image } from 'astro:assets';
 import Section from '../Section.astro';
 import Ornament from '../Ornament.astro';
+import catholicCross from '../../assets/catholic-cross.png';
 import { gratitudNote } from '../../data/wedding';
 ---
 
-<Section id="gratitud" background="ivory">
-	<Ornament class="mb-8" />
+<Section id="gratitud" background="ivory" class="relative overflow-hidden">
+	<Ornament variant="corner-top-right" class="opacity-90" />
+	<Ornament variant="corner-bottom-left" class="opacity-90" />
 
-	<p class="mx-auto max-w-[55ch] text-center font-serif text-2xl leading-relaxed text-ink italic md:text-4xl">
-		{gratitudNote.body}<br>
-		<span class="font-script text-4xl text-dusty not-italic md:text-6xl">{gratitudNote.highlight}</span>.
-	</p>
+	<Image src={catholicCross} alt="" class="relative mx-auto mb-6 h-16 w-auto" />
 
-	<Ornament class="mt-8" />
+	<Ornament class="relative mb-8" variant="top" />
+
+	<div class="relative mx-auto max-w-[65ch] rounded-sm bg-deep px-6 py-10 sm:px-12 sm:py-14">
+		<p class="text-center font-serif text-lg leading-relaxed text-white italic md:text-2xl">
+			{gratitudNote.body}<br>
+			<span class="font-serif text-2xl font-semibold text-champagne italic md:text-4xl">{gratitudNote.highlight}</span>.
+		</p>
+	</div>
+
+	<Ornament class="relative mt-8" variant="bottom" />
 </Section>

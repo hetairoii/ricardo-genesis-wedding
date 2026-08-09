@@ -1,0 +1,51 @@
+---
+import { Image } from 'astro:assets';
+import Section from '../Section.astro';
+import Ornament from '../Ornament.astro';
+import HillShape from '../HillShape.astro';
+import PlaqueCard from '../contenedores/PlaqueCard.astro';
+import flowersCentered from '../../assets/flowers-centered.png';
+import ornamentalDividerTop from '../../assets/ornamental-divider-top.png';
+import { weddingDateDisplay } from '../../data/wedding';
+---
+
+<Section id="fecha" background="ivory" variant="scale" class="relative flex min-h-[34rem] items-center overflow-hidden">
+	<!-- Mismas flores laterales que el resto de secciones (Ornament lateral-left/right):
+	     pegadas al borde de la sección, no encajadas en una columna de grid, para que se vean
+	     igual de grandes aquí que en Honor/RSVP. -->
+	<Ornament variant="lateral-left" class="opacity-90" />
+	<Ornament variant="lateral-right" class="opacity-90" />
+
+	<!-- Flores en las 4 esquinas: normales (top-right, bottom-left) + espejadas (top-left,
+	     bottom-right) para cubrir las cuatro. -->
+	<Ornament variant="corner-top-right" class="opacity-90" />
+	<Ornament variant="corner-bottom-left" class="opacity-90" />
+	<Ornament variant="corner-top-right" mirror class="opacity-90" />
+	<Ornament variant="corner-bottom-left" mirror class="opacity-90" />
+
+	<div class="relative mx-auto max-w-sm">
+		<Image src={ornamentalDividerTop} alt="" class="relative z-10 mx-auto mb-[-1px] h-auto w-40 sm:w-48" />
+
+		<PlaqueCard tone="deep">
+			<p class="font-label text-sm tracking-[0.4em] uppercase">{weddingDateDisplay.month}</p>
+
+			<div class="mt-6 grid grid-cols-3 items-center gap-2">
+				<p class="justify-self-end border-t border-b border-white/40 px-2 py-2 font-label text-sm tracking-[0.25em] uppercase sm:text-base">
+					{weddingDateDisplay.weekday}
+				</p>
+				<p class="font-serif text-6xl sm:text-7xl">{weddingDateDisplay.day}</p>
+				<p class="justify-self-start border-t border-b border-white/40 px-2 py-2 font-label text-sm tracking-[0.25em] uppercase sm:text-base">
+					{weddingDateDisplay.year}
+				</p>
+			</div>
+		</PlaqueCard>
+
+		<Image
+			src={flowersCentered}
+			alt=""
+			class="relative z-10 mx-auto -mt-8 w-full max-w-[180px] sm:max-w-[220px]"
+		/>
+	</div>
+
+	<HillShape class="pointer-events-none absolute inset-x-0 bottom-0 h-48 w-full sm:h-64" />
+</Section>

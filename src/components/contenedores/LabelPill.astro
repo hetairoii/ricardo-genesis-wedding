@@ -1,0 +1,34 @@
+---
+/*
+	Píldora de contorno fino para datos sueltos: "HORA: 18:00", "Formal", un nombre de salón.
+	Es un contenedor de TEXTO, no un botón -- para acciones con enlace real ya existe
+	src/components/LinkButton.astro, que además trae estados de foco y hover.
+*/
+interface Props {
+	/** 'pill' = extremos totalmente redondos · 'soft' = esquinas apenas suavizadas. */
+	shape?: 'pill' | 'soft';
+	tone?: 'outline' | 'solid' | 'light';
+	class?: string;
+}
+
+const { shape = 'soft', tone = 'outline', class: className } = Astro.props;
+
+const shapeClass = { pill: 'rounded-full', soft: 'rounded-sm' }[shape];
+
+const toneClass = {
+	outline: 'border border-champagne text-deep',
+	solid: 'border border-deep bg-deep text-white',
+	light: 'border border-white/50 text-white',
+}[tone];
+---
+
+<span
+	class:list={[
+		'inline-flex items-center justify-center px-5 py-2 font-label text-xs tracking-[0.25em] uppercase sm:text-sm',
+		shapeClass,
+		toneClass,
+		className,
+	]}
+>
+	<slot />
+</span>

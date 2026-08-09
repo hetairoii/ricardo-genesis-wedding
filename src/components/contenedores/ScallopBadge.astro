@@ -1,0 +1,73 @@
+---
+/*
+	Badge festoneado (borde ondulado tipo sello/estampilla), como el bloque "Faltan" o el
+	rótulo de "Dress Code" de la referencia.
+
+	El festón se dibuja como un <path> SVG generado aquí (build time), no con border-radius:
+	CSS no sabe hacer ondas. Cada onda es un arco semicircular apoyado en la cuerda entre dos
+	puntos consecutivos de una elipse, así que el número de ondas es un parámetro real.
+
+	El SVG va con preserveAspectRatio="none" para que el badge se estire al contenido que le
+	pongas dentro; en proporciones cercanas al cuadrado (el uso normal) la onda no se deforma
+	de forma perceptible.
+
+	El wrapper es `flex` (bloque), no `inline-flex`: un `inline-flex` es una caja de nivel
+	inline, y `margin: auto` no la centra -- solo funciona en cajas de bloque (o en flex
+	items dentro de OTRO flex). Con `inline-flex`, el badge quedaba pegado a la izquierda de
+	su contenedor salvo que ese contenedor tuviera `text-align: center` (que es lo que lo
+	"centraba" por accidente en Countdown, pero no en DressCode/RSVP).
+*/
+interface Props {
+	/** Número de ondas del borde. Menos = ondas grandes y marcadas; más = festón fino. */
+	scallops?: number;
+	/** Color de relleno del festón. */
+	tone?: 'sky' | 'ivory' | 'white' | 'deep';
+	class?: string;
+}
+
+const { scallops = 16, tone = 'sky', class: className } = Astro.props;
+
+const tones = {
+	sky: { fill: 'text-sky', content: 'text-ink' },
+	ivory: { fill: 'text-ivory', content: 'text-ink' },
+	white: { fill: 'text-white', content: 'text-ink' },
+	deep: { fill: 'text-deep', content: 'text-white' },
+}[tone];
+
+// Radio de cada onda, resuelto para que las ondas queden justo tangentes dentro del viewBox:
+// bump = (100 - bump) * sin(pi/N)  ->  bump = 100 * sin / (1 + sin).
+const sin = Math.sin(Math.PI / scallops);
+const bump = (100 * sin) / (1 + sin);
+const radius = 100 - bump;
+
+const points = Array.from({ length: scallops }, (_, i) => {
+	const angle = (2 * Math.PI * i) / scallops - Math.PI / 2;
+	return [100 + radius * Math.cos(angle), 100 + radius * Math.sin(angle)];
+});
+
+// sweep-flag = 1 recorriendo los puntos en sentido horario -> cada arco abomba hacia afuera.
+let path = `M ${points[0][0].toFixed(2)} ${points[0][1].toFixed(2)}`;
+for (let i = 1; i <= scallops; i++) {
+	const [x, y] = points[i % scallops];
+	const [px, py] = points[i - 1];
+	const r = (Math.hypot(x - px, y - py) / 2).toFixed(2);
+	path += ` A ${r} ${r} 0 0 1 ${x.toFixed(2)} ${y.toFixed(2)}`;
+}
+path += ' Z';
+---
+
+<div class:list={['relative flex items-center justify-center px-10 py-8', className]}>
+	<svg
+		class:list={['absolute inset-0 h-full w-full', tones.fill]}
+		viewBox="0 0 200 200"
+		preserveAspectRatio="none"
+		aria-hidden="true"
+		focusable="false"
+	>
+		<path d={path} fill="currentColor" />
+	</svg>
+
+	<div class:list={['relative text-center', tones.content]}>
+		<slot />
+	</div>
+</div>
