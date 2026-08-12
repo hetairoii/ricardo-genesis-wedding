@@ -82,15 +82,23 @@
     transform: translateY(28px);
   }
 
-  html.js-reveal-enabled [data-reveal][data-reveal-variant='fade-left'] {
+  /*
+   * `:where(...)` alrededor del atributo de variante anula su aporte a la especificidad: sin
+   * esto, esta regla y la de `.reveal-visible` de abajo quedan EMPATADAS en especificidad
+   * (misma cantidad de clases + atributos), y gana quien esté declarada después en la hoja --
+   * fragilísimo ante cualquier reordenamiento. Con `:where()`, `.reveal-visible` siempre pesa
+   * más y gana sin depender del orden, así que un elemento revelado nunca se queda pegado en
+   * su posición de entrada (el bug real detrás del "desplazado a la derecha" reportado en RSVP).
+   */
+  html.js-reveal-enabled [data-reveal]:where([data-reveal-variant='fade-left']) {
     transform: translateX(-36px);
   }
 
-  html.js-reveal-enabled [data-reveal][data-reveal-variant='fade-right'] {
+  html.js-reveal-enabled [data-reveal]:where([data-reveal-variant='fade-right']) {
     transform: translateX(36px);
   }
 
-  html.js-reveal-enabled [data-reveal][data-reveal-variant='scale'] {
+  html.js-reveal-enabled [data-reveal]:where([data-reveal-variant='scale']) {
     transform: scale(0.94);
   }
 
