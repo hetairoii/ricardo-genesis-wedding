@@ -3,6 +3,8 @@ import Section from '../Section.astro';
 import Ornament from '../Ornament.astro';
 import PhotoCard from '../contenedores/PhotoCard.astro';
 import { couple, cierreNote } from '../../data/wedding';
+import retratoElegante from '../../assets/fotos-boda/retrato-elegante.jpg';
+import detalleAnillo from '../../assets/fotos-boda/detalle-anillo.jpg';
 
 const paragraphs = cierreNote.body.split('\n\n');
 ---
@@ -21,10 +23,23 @@ const paragraphs = cierreNote.body.split('\n\n');
 	-->
 	<div class="relative mx-auto mb-12 grid max-w-md grid-cols-2 gap-4 sm:gap-6">
 		<div class="rotate-[-2.5deg]">
-			<PhotoCard alt={`Retrato de ${couple.groomFirstName}`} ratio="portrait" tone="gold" />
+			<PhotoCard
+				src={retratoElegante}
+				alt={`Retrato de ${couple.groomFirstName} y ${couple.brideFirstName}`}
+				ratio="portrait"
+				tone="gold"
+				bw
+				focus="top"
+			/>
 		</div>
 		<div class="rotate-[2.5deg] sm:mt-8">
-			<PhotoCard alt={`Retrato de ${couple.brideFirstName}`} ratio="portrait" tone="gold" />
+			<PhotoCard
+				src={detalleAnillo}
+				alt={`${couple.groomFirstName} y ${couple.brideFirstName} en un momento íntimo, mano con el anillo de compromiso`}
+				ratio="portrait"
+				tone="gold"
+				bw
+			/>
 		</div>
 	</div>
 

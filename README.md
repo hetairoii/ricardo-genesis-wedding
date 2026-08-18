@@ -7,7 +7,7 @@ Construida con [Astro](https://astro.build) 7 + [Tailwind CSS](https://tailwindc
 ## Contenido de la invitación
 
 0. **Sobre de apertura** — portada con un sobre animado; al tocarlo se abre y arranca la música de fondo.
-1. **Hero** — nombres de los novios y anuncio de la boda, con la foto (o placeholder) a pantalla completa.
+1. **Hero** — nombres de los novios y anuncio de la boda, con foto.
 2. **Invitación formal** — texto ceremonial, con espacio opcional para los padres.
 3. **Cuenta regresiva** — hasta el instante exacto de la ceremonia.
 4. **Fecha y lugar** — con botones "Cómo llegar" y "Añadir al calendario" (Google Calendar + `.ics`).
@@ -61,20 +61,23 @@ Los campos que todavía faltan están marcados literalmente como `"PENDIENTE"` c
 
 `weddingDateISO` en `wedding.ts` lleva un offset explícito (`"2026-11-28T17:00:00-05:00"`), no el texto `"EST"`. De ahí derivan automáticamente la cuenta regresiva, el archivo `.ics` y el enlace de Google Calendar — cada invitado, sin importar su zona horaria, cuenta hasta el mismo instante real. Si la hora de inicio cambia, solo hay que actualizar esta constante.
 
-## Cómo agregar las fotos
+## Fotos
 
-Mientras no hay fotos, cada espacio de imagen usa el componente `src/components/PhotoSlot.astro`, que muestra un degradado con el monograma "R&G" y reserva exactamente el espacio final (mismo `aspect-ratio`), para que sustituir el placeholder no mueva ningún otro elemento de la página.
+Las fotos oficiales de la sesión viven en `src/assets/fotos-boda/` y se usan a través de `src/components/contenedores/PhotoCard.astro` (marco + `PhotoSlot`) en Hero, Gratitud, InvitacionFormal y Cierre. `src/components/PhotoSlot.astro` sigue siendo el único punto donde se decide cómo se pinta una foto (`ratio`, y ahora también `bw` y `focus`); si no se le pasa `src`, cae de vuelta al degradado placeholder.
 
-Para poner una foto real:
+Para poner o reemplazar una foto:
 
 ```astro
 ---
-import miFoto from '../../assets/foto-hero.jpg';
+import miFoto from '../../assets/fotos-boda/mi-foto.jpg';
 ---
-<PhotoSlot src={miFoto} alt="Ricardo y Genesis" ratio="cover" priority />
+<PhotoCard src={miFoto} alt="Ricardo y Genesis" ratio="landscape" bw focus="top" />
 ```
 
-Astro optimiza la imagen automáticamente (WebP, tamaños responsivos) al hacer build. Actualmente solo el hero (`src/components/secciones/Hero.astro`) usa una foto; si se agregan más adelante, se instancia `PhotoSlot` de la misma forma en cualquier otra sección.
+- `bw` aplica escala de grises (todas las fotos reales del sitio se muestran así, para un tono unificado).
+- `focus="top"` ancla el recorte arriba en vez de centrarlo — útil cuando el hueco es más ancho que la foto original (por ejemplo, encajar una foto vertical en un hueco cuadrado o apaisado sin cortar las cabezas).
+
+Astro optimiza la imagen automáticamente (WebP, tamaños responsivos) al hacer build.
 
 ## Sistema de diseño
 

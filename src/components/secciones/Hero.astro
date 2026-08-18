@@ -4,6 +4,7 @@ import PhotoCard from '../contenedores/PhotoCard.astro';
 import HangingChain from '../contenedores/HangingChain.astro';
 import Ornament from '../Ornament.astro';
 import { couple } from '../../data/wedding';
+import abrazoSonrisa from '../../assets/fotos-boda/abrazo-sonrisa.jpg';
 ---
 
 <!--
@@ -54,10 +55,13 @@ import { couple } from '../../data/wedding';
 		</div>
 
 		<PhotoCard
+			src={abrazoSonrisa}
 			alt={`Fotografía de ${couple.groomFirstName} y ${couple.brideFirstName}`}
 			ratio="square"
 			tone="gold"
 			priority
+			bw
+			focus="top"
 			class="-mt-3 w-[min(14rem,52vw)]"
 		/>
 	</div>

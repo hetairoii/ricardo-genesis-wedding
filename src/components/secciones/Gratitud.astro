@@ -5,6 +5,7 @@ import Ornament from '../Ornament.astro';
 import PhotoCard from '../contenedores/PhotoCard.astro';
 import catholicCross from '../../assets/catholic-cross.png';
 import { couple, gratitudNote } from '../../data/wedding';
+import manosAnillo from '../../assets/fotos-boda/manos-anillo.jpg';
 ---
 
 <Section id="gratitud" background="ivory" class="relative overflow-hidden">
@@ -32,9 +33,11 @@ import { couple, gratitudNote } from '../../data/wedding';
 	-->
 	<div class="relative mx-auto -mt-4 w-[min(20rem,78%)]">
 		<PhotoCard
-			alt={`${couple.groomFirstName} y ${couple.brideFirstName}`}
+			src={manosAnillo}
+			alt={`Manos entrelazadas de ${couple.groomFirstName} y ${couple.brideFirstName} con el anillo de compromiso`}
 			ratio="landscape"
 			tone="gold"
+			bw
 			caption="Nuestra historia"
 		/>
 	</div>

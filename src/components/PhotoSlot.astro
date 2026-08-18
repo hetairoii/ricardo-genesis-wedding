@@ -14,6 +14,10 @@ interface Props {
 	innerBorder?: boolean;
 	/** Degradado del placeholder cuando no hay `src`. 'pale' = el histórico (marfil/cielo/serenidad), 'deep' = más saturado (cielo/serenidad/gris-azulado), para secciones grandes como el hero. */
 	placeholderTone?: 'pale' | 'deep';
+	/** Blanco y negro, para unificar tono con el resto de fotos reales del sitio. */
+	bw?: boolean;
+	/** Punto de enfoque del recorte. 'top' evita cortar cabezas en fotos verticales dentro de huecos más anchos que altos. */
+	focus?: 'center' | 'top';
 	class?: string;
 }
 
@@ -24,6 +28,8 @@ const {
 	priority = false,
 	innerBorder = true,
 	placeholderTone = 'pale',
+	bw = false,
+	focus = 'center',
 	class: className,
 } = Astro.props;
 
@@ -41,7 +47,7 @@ const ratioClass = {
 			<Image
 				src={src}
 				alt={alt}
-				class="h-full w-full object-cover"
+				class:list={['h-full w-full object-cover', bw && 'grayscale', focus === 'top' && 'object-top']}
 				loading={priority ? 'eager' : 'lazy'}
 				fetchpriority={priority ? 'high' : 'auto'}
 				decoding="async"

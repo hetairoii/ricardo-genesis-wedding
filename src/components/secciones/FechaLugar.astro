@@ -5,6 +5,7 @@ import Ornament from '../Ornament.astro';
 import LinkButton from '../LinkButton.astro';
 import PhotoCard from '../contenedores/PhotoCard.astro';
 import weddingArch from '../../assets/wedding-arch.png';
+import gratoJardinDeEventos from '../../assets/grato-jardin-de-eventos.jpg';
 import { weddingDateDisplay, venue } from '../../data/wedding';
 
 const hasMapsUrl = venue.mapsUrl !== 'PENDIENTE';
@@ -44,6 +45,7 @@ const venueRest = venueRestWords.join(' ');
 		-->
 		<div class="mx-auto mt-10 w-[min(22rem,80%)]">
 			<PhotoCard
+				src={gratoJardinDeEventos}
 				alt={`Fotografía de ${venue.name}, ${venue.addressLine}`}
 				ratio="landscape"
 				shape="arch"

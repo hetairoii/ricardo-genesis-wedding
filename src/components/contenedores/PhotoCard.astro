@@ -28,6 +28,10 @@ interface Props {
 	/** Pie de foto opcional, en versalitas bajo el marco. */
 	caption?: string;
 	priority?: boolean;
+	/** Blanco y negro, para unificar tono con el resto de fotos reales del sitio. */
+	bw?: boolean;
+	/** Punto de enfoque del recorte. 'top' evita cortar cabezas en fotos verticales dentro de huecos más anchos que altos. */
+	focus?: 'center' | 'top';
 	class?: string;
 }
 
@@ -39,6 +43,8 @@ const {
 	tone = 'gold',
 	caption,
 	priority = false,
+	bw = false,
+	focus = 'center',
 	class: className,
 } = Astro.props;
 
@@ -56,7 +62,16 @@ const innerShape = shape === 'arch' ? 'rounded-t-[999px]' : 'rounded-[2px]';
 <figure class:list={['relative', className]}>
 	<div class:list={['relative p-1.5 shadow-sm sm:p-2', outerShape, tones.frame]}>
 		<div class:list={['overflow-hidden', innerShape]}>
-			<PhotoSlot src={src} alt={alt} ratio={ratio} priority={priority} innerBorder={false} class="w-full" />
+			<PhotoSlot
+				src={src}
+				alt={alt}
+				ratio={ratio}
+				priority={priority}
+				innerBorder={false}
+				bw={bw}
+				focus={focus}
+				class="w-full"
+			/>
 		</div>
 	</div>
 
