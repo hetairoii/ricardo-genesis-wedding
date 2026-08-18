@@ -32,6 +32,8 @@ interface Props {
 	bw?: boolean;
 	/** Punto de enfoque del recorte. 'top' evita cortar cabezas en fotos verticales dentro de huecos más anchos que altos. */
 	focus?: 'center' | 'top';
+	/** Grosor del paspartú. 'regular' = el histórico · 'thin' = filete mínimo, para fotos donde el marco no debe competir con la imagen. */
+	frameWidth?: 'regular' | 'thin';
 	class?: string;
 }
 
@@ -45,8 +47,11 @@ const {
 	priority = false,
 	bw = false,
 	focus = 'center',
+	frameWidth = 'regular',
 	class: className,
 } = Astro.props;
+
+const frameThickness = frameWidth === 'thin' ? 'p-[3px]' : 'p-1.5 sm:p-2';
 
 const tones = {
 	gold: { frame: 'photo-card-frame--gold', caption: 'text-deep' },
@@ -60,7 +65,7 @@ const innerShape = shape === 'arch' ? 'rounded-t-[999px]' : 'rounded-[2px]';
 ---
 
 <figure class:list={['relative', className]}>
-	<div class:list={['relative p-1.5 shadow-sm sm:p-2', outerShape, tones.frame]}>
+	<div class:list={['relative shadow-sm', frameThickness, outerShape, tones.frame]}>
 		<div class:list={['overflow-hidden', innerShape]}>
 			<PhotoSlot
 				src={src}

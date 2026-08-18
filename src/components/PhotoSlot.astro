@@ -47,6 +47,7 @@ const ratioClass = {
 			<Image
 				src={src}
 				alt={alt}
+				quality="max"
 				class:list={['h-full w-full object-cover', bw && 'grayscale', focus === 'top' && 'object-top']}
 				loading={priority ? 'eager' : 'lazy'}
 				fetchpriority={priority ? 'high' : 'auto'}

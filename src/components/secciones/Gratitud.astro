@@ -24,18 +24,22 @@ import manosAnillo from '../../assets/fotos-boda/manos-anillo.jpg';
 	</div>
 
 	<!--
-		Foto apaisada bajo la cita: corta el bloque azul de texto, que era el muro más largo
-		de la parte alta de la invitación, y da el primer respiro visual después del hero.
-		Va con margen negativo para solaparse con el borde inferior del bloque, como una foto
-		apoyada sobre la tarjeta y no como una fila más de la sección. El solape se queda en
-		16px (menos que el padding inferior del bloque, 40px en móvil) para que muerda el borde
-		azul sin llegar a pegarse a la última línea de la cita.
+		Foto bajo la cita: corta el bloque azul de texto, que era el muro más largo de la parte
+		alta de la invitación, y da el primer respiro visual después del hero. Va con margen
+		negativo para solaparse con el borde inferior del bloque, como una foto apoyada sobre la
+		tarjeta y no como una fila más de la sección. El solape se queda en 16px (menos que el
+		padding inferior del bloque, 40px en móvil) para que muerda el borde azul sin llegar a
+		pegarse a la última línea de la cita.
+
+		`ratio="portrait"` (3:4), no "landscape": la foto real es vertical (2:3) y forzarla a un
+		hueco horizontal recortaba más de la mitad de la imagen. El contenedor es más angosto
+		que antes porque ahora crece en alto, no en ancho.
 	-->
-	<div class="relative mx-auto -mt-4 w-[min(20rem,78%)]">
+	<div class="relative mx-auto -mt-4 w-[min(16rem,60%)]">
 		<PhotoCard
 			src={manosAnillo}
 			alt={`Manos entrelazadas de ${couple.groomFirstName} y ${couple.brideFirstName} con el anillo de compromiso`}
-			ratio="landscape"
+			ratio="portrait"
 			tone="gold"
 			bw
 			caption="Nuestra historia"
