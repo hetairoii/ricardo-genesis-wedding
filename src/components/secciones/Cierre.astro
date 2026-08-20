@@ -1,10 +1,10 @@
 ---
+import { Image } from 'astro:assets';
 import Section from '../Section.astro';
 import Ornament from '../Ornament.astro';
-import PhotoCard from '../contenedores/PhotoCard.astro';
 import { couple, cierreNote } from '../../data/wedding';
-import retratoElegante from '../../assets/fotos-boda/retrato-elegante.jpg';
-import detalleAnillo from '../../assets/fotos-boda/abrazo-sonrisa.jpg';
+import retratoElegante from '../../assets/fotos-boda/retrato-elegante-rasgada.jpg';
+import detalleAnillo from '../../assets/fotos-boda/abrazo-sonrisa-rasgada.jpg';
 
 const paragraphs = cierreNote.body.split('\n\n');
 ---
@@ -17,28 +17,25 @@ const paragraphs = cierreNote.body.split('\n\n');
 
 	<!--
 		Díptico: dos retratos apenas girados en sentidos opuestos, como dos copias apoyadas
-		una junto a la otra. El giro va en el contenedor y no dentro de PhotoCard para que el
-		componente siga siendo neutro; el desfase vertical de la segunda (sm:mt-8) es lo que
-		evita que el par se lea como una tabla de dos celdas.
+		una junto a la otra. El giro va en el contenedor y no en la imagen misma, para que el
+		desfase vertical de la segunda (sm:mt-8) siga evitando que el par se lea como una tabla
+		de dos celdas. Sin marco: ambas fotos ya vienen rasgadas y a su aspecto nativo.
 	-->
 	<div class="relative mx-auto mb-12 grid max-w-md grid-cols-2 gap-4 sm:gap-6">
 		<div class="rotate-[-2.5deg]">
-			<PhotoCard
+			<Image
 				src={retratoElegante}
 				alt={`Retrato de ${couple.groomFirstName} y ${couple.brideFirstName}`}
-				ratio="portrait"
-				tone="gold"
-				bw
-				focus="top"
+				quality="max"
+				class="block h-auto w-full"
 			/>
 		</div>
 		<div class="rotate-[2.5deg] sm:mt-8">
-			<PhotoCard
+			<Image
 				src={detalleAnillo}
 				alt={`${couple.groomFirstName} y ${couple.brideFirstName} en un momento íntimo, mano con el anillo de compromiso`}
-				ratio="portrait"
-				tone="gold"
-				bw
+				quality="max"
+				class="block h-auto w-full"
 			/>
 		</div>
 	</div>

@@ -1,0 +1,22 @@
+---
+/*
+	Sección dedicada solo a la foto que antes colgaba del hero (placa + cadenas + marco). Ahora
+	es su propia sección, justo después del hero: nada más que la foto ya rasgada, sin marco ni
+	texto. Tamaño contenido a su ancho histórico (~20rem/72vw) en vez de a sangre completo: el
+	archivo rasgado es de 334x502px, y estirarlo al 100% del ancho en desktop se vería borroso
+	por el escalado.
+*/
+import { Image } from 'astro:assets';
+import Section from '../Section.astro';
+import { couple } from '../../data/wedding';
+import detalleAnillo from '../../assets/fotos-boda/detalle-anillo-rasgada.jpg';
+---
+
+<Section id="hero-foto" background="mist">
+	<Image
+		src={detalleAnillo}
+		alt={`Fotografía de ${couple.groomFirstName} y ${couple.brideFirstName}`}
+		quality="max"
+		class="mx-auto block h-auto w-[min(20rem,72vw)]"
+	/>
+</Section>
